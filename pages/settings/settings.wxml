@@ -7,6 +7,13 @@
     </t-cell>
   </t-cell-group>
 
+  <view class="st-section-label">演示</view>
+  <t-cell-group>
+    <t-cell title="支付流程演示" arrow data-url="/pages/pay-demo/pay-demo" bind:click="goPage">
+      <view slot="leftIcon"><t-icon name="money" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+  </t-cell-group>
+
   <view class="st-section-label">数据</view>
   <t-cell-group>
     <t-cell title="清除缓存" arrow data-action="clear" bind:click="onClear">

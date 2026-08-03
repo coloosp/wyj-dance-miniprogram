@@ -1,0 +1,60 @@
+<view class="pay-page">
+
+  <view class="pay-hero">
+    <view class="pay-hero-deco"></view>
+    <view class="pay-hero-title">模拟支付演示</view>
+    <view class="pay-hero-sub">仅用于演示流程，不会产生真实扣款</view>
+    <t-tag variant="light" size="small" custom-class="pay-hero-tag">演示模式</t-tag>
+  </view>
+
+  <view class="pay-body" wx:if="{{!success}}">
+    <view class="pay-card">
+      <view class="pay-card-title">选择支持金额</view>
+      <view class="amount-list">
+        <view
+          class="amount-item {{selected === item.value ? 'active' : ''}}"
+          wx:for="{{amounts}}"
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="onChooseAmount"
+        >
+          <view class="amount-num">{{item.value}}</view>
+          <view class="amount-unit">元</view>
+          <view class="amount-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="pay-card">
+      <view class="pay-row">
+        <text class="pay-row-label">支付方式</text>
+        <text class="pay-row-value">微信支付（模拟）</text>
+      </view>
+      <view class="pay-row">
+        <text class="pay-row-label">支付金额</text>
+        <text class="pay-row-amount">¥ {{selected}}.00</text>
+      </view>
+    </view>
+
+    <t-button block theme="primary" loading="{{paying}}" disabled="{{paying}}" custom-class="pay-btn" bindtap="onPay">
+      {{paying ? '支付处理中...' : '确认支付（模拟）'}}
+    </t-button>
+    <view class="pay-tip">点击确认仅展示支付成功界面，不发起任何真实扣款</view>
+  </view>
+
+  <view class="pay-success" wx:else>
+    <t-result
+      theme="success"
+      title="支付成功（演示）"
+      description="本次为模拟支付，未产生真实扣款"
+    />
+    <view class="pay-order">订单号：{{orderNo}}</view>
+    <view class="pay-actions">
+      <t-button block theme="primary" custom-class="pay-btn" bindtap="onReset">再来一次</t-button>
+      <t-button block variant="outline" custom-class="pay-btn" bindtap="goBack">返回</t-button>
+    </view>
+  </view>
+
+  <t-divider content-position="center" custom-class="pay-dvd">舞影纪 DanceVerse</t-divider>
+
+</view>

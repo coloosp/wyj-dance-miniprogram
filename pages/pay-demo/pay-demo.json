@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "支付演示",
+  "navigationBarBackgroundColor": "#C41E2A",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-result": "tdesign-miniprogram/result/result",
+    "t-divider": "tdesign-miniprogram/divider/divider"
+  }
+}

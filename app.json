@@ -10,7 +10,8 @@
     "pages/player/player",
     "pages/list/list",
     "pages/settings/settings",
-    "pages/info/info"
+    "pages/info/info",
+    "pages/pay-demo/pay-demo"
   ],
   "tabBar": {
     "color": "#999999",

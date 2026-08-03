@@ -1,0 +1,152 @@
+.pay-page {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding-bottom: 48rpx;
+}
+
+.pay-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 56rpx 40rpx 44rpx;
+  background: linear-gradient(160deg, #C41E2A 0%, #8B1A1A 55%, #5C1010 100%);
+}
+
+.pay-hero-deco {
+  position: absolute;
+  right: -80rpx;
+  top: -80rpx;
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pay-hero-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pay-hero-sub {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.pay-hero-tag {
+  margin-top: 22rpx;
+  --td-tag-light-color: #fff;
+  --td-tag-light-bg-color: rgba(255, 255, 255, 0.16);
+  --td-tag-light-border-color: rgba(255, 255, 255, 0.28);
+}
+
+.pay-body {
+  padding: 32rpx 32rpx 0;
+}
+
+.pay-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+}
+
+.pay-card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-bottom: 22rpx;
+}
+
+.amount-list {
+  display: flex;
+  gap: 20rpx;
+}
+
+.amount-item {
+  flex: 1;
+  border: 2rpx solid #eee;
+  border-radius: 8px;
+  padding: 24rpx 0 20rpx;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.amount-item.active {
+  border-color: #C41E2A;
+  background: #FFF5F5;
+}
+
+.amount-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #2C2C2C;
+}
+
+.amount-item.active .amount-num {
+  color: #C41E2A;
+}
+
+.amount-unit {
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.amount-desc {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.pay-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+  font-size: 26rpx;
+}
+
+.pay-row-label {
+  color: #999;
+}
+
+.pay-row-value {
+  color: #2C2C2C;
+}
+
+.pay-row-amount {
+  color: #C41E2A;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.pay-btn {
+  margin-top: 24rpx;
+}
+
+.pay-tip {
+  margin-top: 18rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #bbb;
+}
+
+.pay-success {
+  padding: 48rpx 40rpx 0;
+  text-align: center;
+}
+
+.pay-order {
+  margin-top: 28rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.pay-actions {
+  margin-top: 40rpx;
+}
+
+.pay-dvd {
+  margin-top: 48rpx;
+}
