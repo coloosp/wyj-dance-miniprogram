@@ -125,6 +125,10 @@
   margin-top: 24rpx;
 }
 
+.pay-btn-outline {
+  margin-top: 24rpx;
+}
+
 .pay-tip {
   margin-top: 18rpx;
   text-align: center;
