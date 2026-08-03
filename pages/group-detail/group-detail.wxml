@@ -1,0 +1,51 @@
+<view class="gd-page">
+  <!-- 封面 -->
+  <view class="gd-cover">
+    <view class="gd-bg"></view>
+    <view class="gd-cover-inner">
+      <t-icon name="usergroup-circle" size="32px" color="rgba(255,255,255,0.9)" />
+      <view class="gd-name">{{name}}</view>
+      <view class="gd-desc">
+        <t-tag variant="outline" size="small" custom-class="gd-tag">{{tag}}</t-tag>
+        <text class="gd-district" wx:if="{{district}}">{{district}}</text>
+      </view>
+      <view class="gd-founder" wx:if="{{founder}}">成立：{{founder}}</view>
+    </view>
+  </view>
+
+  <!-- 节目目录 -->
+  <view class="gd-card">
+    <view class="gd-title"><view class="gd-bar"></view>节目目录（{{programs.length}}）</view>
+    <view class="gd-program-list">
+      <view class="gd-prog" wx:for="{{programs}}" wx:key="name">
+        <view class="gd-prog-num">{{index + 1}}</view>
+        <view class="gd-prog-info">
+          <view class="gd-prog-name">{{item.name}}</view>
+          <view class="gd-prog-meta">
+            <text class="gd-prog-type">{{item.type}}</text>
+            <text class="gd-prog-dur">{{item.duration}}</text>
+          </view>
+          <view class="gd-prog-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 演出视频 -->
+  <view class="gd-card">
+    <view class="gd-title"><view class="gd-bar"></view>演出视频（{{videos.length}}）</view>
+    <view class="gd-video-list">
+      <view class="gd-video" wx:for="{{videos}}" wx:key="title"
+      data-src="{{item.src}}" data-title="{{item.title}}" data-views="{{item.views}}" data-thumb="{{item.thumb}}" data-index="{{index}}" bindtap="playVideo">
+        <image src="{{item.thumb}}" mode="aspectFill" class="gd-video-thumb" />
+        <view class="gd-video-play">
+          <t-icon name="play-circle" size="22px" color="#fff" />
+        </view>
+        <view class="gd-video-info">
+          <view class="gd-video-title">{{item.title}}</view>
+          <view class="gd-video-views">{{item.views}} 次观看</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

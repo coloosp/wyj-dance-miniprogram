@@ -1,0 +1,88 @@
+/* ========== TDesign 基础样式 ========== */
+@import 'miniprogram_npm/tdesign-miniprogram/common/style/index.wxss';
+
+/*
+ * 舞影纪 · 全局样式
+ * 主色 #C41E2A — 红岩红 / 中国红
+ */
+
+/* ========== 基础重置 ========== */
+page {
+  background-color: #FFF5F5;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC',
+    'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  color: #2C2C2C;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========== 通用工具类 ========== */
+.flex-row { display: flex; flex-direction: row; align-items: center; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.text-center { text-align: center; }
+.text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ========== 全局品牌组件 ========== */
+
+/* 红色主按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #C41E2A, #A01822);
+  color: #fff;
+  border-radius: 22px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  box-shadow: 0 2px 8px rgba(196, 30, 42, 0.25);
+}
+
+.btn-primary:active { opacity: 0.85; transform: scale(0.97); }
+
+/* 区域标题 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0 12px;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #2C2C2C;
+  position: relative;
+  padding-left: 12px;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  background: #C41E2A;
+  border-radius: 2px;
+}
+
+.section-more { font-size: 12px; color: #999; }
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+}
+.empty-state .empty-icon { font-size: 50px; margin-bottom: 10px; opacity: 0.5; }
+.empty-state .empty-text { font-size: 14px; color: #999; }
+
+/* 底部品牌水印 */
+.page-footer { text-align: center; padding: 24px 0 16px; }
+.page-footer .brand-line { font-size: 13px; color: #C41E2A; font-weight: 600; letter-spacing: 2px; margin-bottom: 4px; }
+.page-footer .sub-line { font-size: 11px; color: #bbb; }

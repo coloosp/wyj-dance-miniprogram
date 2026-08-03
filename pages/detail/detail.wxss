@@ -1,0 +1,33 @@
+/* 详情页（TDesign 版） */
+.dt-page { min-height: 100vh; background: #FFF5F5; padding-bottom: 16px; }
+.dt-cover { position: relative; padding: 40px 20px 32px; text-align: center; color: #fff; overflow: hidden; }
+.dt-deco { position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); }
+.dt-cover-inner { position: relative; z-index: 1; }
+.dt-cover-name { font-size: 22px; font-weight: 900; letter-spacing: 3px; margin: 12px 0 14px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.dt-cover-line { width: 30px; height: 2px; background: rgba(255,255,255,0.6); margin: 0 auto 14px; border-radius: 1px; }
+.dt-cover-desc { font-size: 11px; opacity: 0.75; letter-spacing: 1px; }
+.dt-card { margin: 12px 16px; background: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+.dt-card-title { display: flex; align-items: center; padding: 16px 18px 0; font-size: 15px; font-weight: 700; color: #2C2C2C; }
+.dt-bar { width: 3px; height: 15px; background: #C41E2A; border-radius: 1.5px; margin-right: 8px; }
+.dt-card-body { padding: 12px 18px 16px; font-size: 13px; color: #555; line-height: 1.8; text-indent: 2em; }
+.dt-list { display: flex; flex-direction: column; }
+.dt-item { display: flex; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #F5F0F0; }
+.dt-item:last-child { border-bottom: none; }
+.dt-dot { width: 5px; height: 5px; border-radius: 50%; background: #C41E2A; margin-top: 6px; margin-right: 10px; flex-shrink: 0; }
+.dt-text { font-size: 13px; color: #555; line-height: 1.7; flex: 1; text-indent: 0; }
+.dt-actions { padding: 8px 12px; display: flex; gap: 8px; }
+.dt-btn-like { background: #FFFFFF !important; border: 1px solid #F0E0E0 !important; font-size: 13px !important; border-radius: 22px !important; padding: 0 !important; min-width: 80px !important; }
+.dt-btn-like.liked { border-color: #F0D0D0 !important; }
+.liked-text { color: #C41E2A !important; }
+.dt-btn-fav { background: #FFFFFF !important; border: 1px solid #F0E0E0 !important; color: #C41E2A !important; font-size: 13px !important; border-radius: 22px !important; padding: 0 !important; }
+.dt-btn-fav.favorited { background: #FFF8E8 !important; border-color: #F0D0A0 !important; }
+.dt-btn-fav.favorited text { color: #C4963A !important; }
+.dt-dvd { margin: 16px 0 !important; color: #bbb !important; font-size: 11px !important; }
+
+/* 折叠面板内容 */
+.collapse-content {
+  padding: 8px 0;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.8;
+}

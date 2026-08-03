@@ -1,0 +1,67 @@
+<!-- 发现（TDesign 升级版） -->
+<view class="discover-page">
+
+  <!-- 快捷入口 -->
+  <t-grid column="{{4}}" border="{{false}}" gutter="0" custom-class="quick-grid">
+    <t-grid-item wx:for="{{quickEntries}}" wx:key="id" data-id="{{item.id}}" data-name="{{item.name}}" bind:click="goDetail">
+      <view class="quick-item">
+        <view class="quick-icon"><t-icon name="{{item.icon}}" size="18px" color="#C41E2A" /></view>
+        <view class="quick-label">{{item.label}}</view>
+      </view>
+    </t-grid-item>
+  </t-grid>
+
+  <!-- Tabs 选项卡 -->
+  <t-tabs value="{{activeTab}}" bind:change="onTabChange">
+    <!-- 最新活动 -->
+    <t-tab-panel label="最新活动" value="0">
+      <view class="tab-content">
+        <t-cell wx:for="{{activities}}" wx:key="idx" wx:for-item="a" arrow="{{false}}">
+          <view slot="leftIcon">
+            <view class="act-date-box">
+              <view class="act-month">{{a.month}}</view>
+              <view class="act-day">{{a.day}}</view>
+            </view>
+          </view>
+          <view slot="title">{{a.title}}</view>
+          <view slot="description">{{a.location}}</view>
+          <view slot="rightIcon"><t-tag variant="light" size="small" custom-class="act-tag-{{a.statusType}}">{{a.status}}</t-tag></view>
+        </t-cell>
+      </view>
+    </t-tab-panel>
+
+    <!-- 赛事集锦 -->
+    <t-tab-panel label="赛事集锦" value="1">
+      <view class="tab-content">
+        <view class="comp-list">
+          <view class="comp-card" wx:for="{{competitions}}" wx:key="idx">
+            <t-image width="100%" height="100px" custom-class="comp-img" />
+            <view class="comp-info">
+              <view class="comp-title">{{item.title}}</view>
+              <view class="comp-desc">{{item.desc}}</view>
+              <view class="comp-date">{{item.date}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+
+    <!-- 旅游花絮 -->
+    <t-tab-panel label="旅游花絮" value="2">
+      <view class="tab-content">
+        <view class="travel-grid">
+          <view class="travel-card" wx:for="{{travelList}}" wx:key="idx">
+            <t-image width="100%" height="90px" custom-class="travel-img" />
+            <view class="travel-info">
+              <view class="travel-name">{{item.name}}</view>
+              <view class="travel-desc">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+  </t-tabs>
+
+  <t-divider content-position="center" custom-class="page-dvd">舞影纪 · 发现更多精彩</t-divider>
+
+</view>

@@ -1,0 +1,38 @@
+<view class="st-page">
+
+  <view class="st-section-label">通用</view>
+  <t-cell-group>
+    <t-cell title="关于舞影纪" arrow data-url="/pages/info/info?type=about" bind:click="goPage">
+      <view slot="leftIcon"><t-icon name="info-circle" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+  </t-cell-group>
+
+  <view class="st-section-label">数据</view>
+  <t-cell-group>
+    <t-cell title="清除缓存" arrow data-action="clear" bind:click="onClear">
+      <view slot="leftIcon"><t-icon name="delete" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+  </t-cell-group>
+
+  <view class="st-section-label">法律信息</view>
+  <t-cell-group>
+    <t-cell title="用户协议" arrow data-url="/pages/info/info?type=agreement" bind:click="goPage">
+      <view slot="leftIcon"><t-icon name="file-1" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+    <t-cell title="隐私政策" arrow data-url="/pages/info/info?type=privacy" bind:click="goPage">
+      <view slot="leftIcon"><t-icon name="secured" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+  </t-cell-group>
+
+  <t-divider content-position="center" custom-class="st-dvd">舞影纪 DanceVerse v1.0.0</t-divider>
+
+  <t-dialog
+    visible="{{showDialog}}"
+    title="清除缓存"
+    content="将清空收藏记录、观看历史、点赞记录和登录信息，确定继续？"
+    confirm-btn="确定"
+    cancel-btn="取消"
+    bind:confirm="onConfirmClear"
+    bind:cancel="onCancel"
+  />
+</view>

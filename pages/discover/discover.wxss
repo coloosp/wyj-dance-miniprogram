@@ -1,0 +1,30 @@
+/* 发现页（TDesign 升级版） */
+.discover-page { background: #FFF5F5; min-height: 100vh; }
+.quick-grid { background: #fff; margin-bottom: 4px; }
+.quick-item { display: flex; flex-direction: column; align-items: center; padding: 6px 0; }
+.quick-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #FFF5F5, #F9E8E8); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.quick-label { font-size: 11px; color: #666; }
+.tab-content { padding: 8px 12px; }
+
+/* 活动 */
+.act-date-box { width: 40px; text-align: center; margin-right: 12px; }
+.act-month { font-size: 10px; color: #C41E2A; font-weight: 600; }
+.act-day { font-size: 16px; font-weight: 700; color: #2C2C2C; line-height: 1.2; }
+
+/* 赛事 */
+.comp-list { display: flex; flex-direction: column; gap: 10px; }
+.comp-card { display: flex; background: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.comp-img { width: 120px; height: 90px; flex-shrink: 0; }
+.comp-info { flex: 1; padding: 10px 12px; }
+.comp-title { font-size: 13px; font-weight: 600; color: #2C2C2C; margin-bottom: 4px; }
+.comp-desc { font-size: 11px; color: #888; margin-bottom: 4px; }
+.comp-date { font-size: 10px; color: #999; }
+
+/* 旅游 */
+.travel-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.travel-card { width: calc(50% - 5px); background: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.travel-img { height: 90px; }
+.travel-info { padding: 10px 12px; }
+.travel-name { font-size: 13px; font-weight: 600; color: #2C2C2C; margin-bottom: 3px; }
+.travel-desc { font-size: 11px; color: #999; }
+.page-dvd { margin: 16px 0 !important; color: #bbb !important; font-size: 11px !important; }

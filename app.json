@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/groups/groups",
+    "pages/discover/discover",
+    "pages/profile/profile",
+    "pages/detail/detail",
+    "pages/group-detail/group-detail",
+    "pages/troupes/troupes",
+    "pages/player/player",
+    "pages/list/list",
+    "pages/settings/settings",
+    "pages/info/info"
+  ],
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#C41E2A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/tab-home.png",
+        "selectedIconPath": "assets/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/groups/groups",
+        "text": "舞团",
+        "iconPath": "assets/tab-groups.png",
+        "selectedIconPath": "assets/tab-groups-active.png"
+      },
+      {
+        "pagePath": "pages/discover/discover",
+        "text": "发现",
+        "iconPath": "assets/tab-discover.png",
+        "selectedIconPath": "assets/tab-discover-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/tab-profile.png",
+        "selectedIconPath": "assets/tab-profile-active.png"
+      }
+    ]
+  },
+  "window": {
+    "navigationBarBackgroundColor": "#C41E2A",
+    "navigationBarTitleText": "舞影纪",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FFF5F5"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,32 @@
+<view class="tp-page">
+  <view class="tp-header">
+    <view class="tp-header-deco"></view>
+    <view class="tp-header-title">{{district.name}}</view>
+    <view class="tp-header-desc">{{district.tag}} · {{troupes.length}} 个艺术团</view>
+  </view>
+
+  <view class="tp-list">
+    <view
+      class="tp-card"
+      wx:for="{{troupes}}" wx:key="name"
+      data-name="{{item.name}}"
+      data-tag="{{item.tag}}"
+      data-founder="{{item.founder}}"
+      bindtap="goDetail"
+    >
+      <t-image
+        width="80px" height="80px"
+        src="/assets/images/troupe_{{index + 1}}.png"
+        custom-class="tp-cover"
+      />
+      <view class="tp-info">
+        <view class="tp-name">{{item.name}}</view>
+        <view class="tp-meta">
+          <t-tag variant="light" size="small" custom-class="tp-tag">{{item.tag}}</t-tag>
+          <text class="tp-founder">成立：{{item.founder}}</text>
+        </view>
+      </view>
+      <t-icon name="chevron-right" size="16px" color="#ddd" />
+    </view>
+  </view>
+</view>

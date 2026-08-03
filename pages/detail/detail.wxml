@@ -1,0 +1,72 @@
+<!-- 栏目详情（TDesign 版） -->
+
+<!-- 骨架屏 -->
+<t-skeleton loading="{{loading}}" rowCol="{{skeletonRows}}"></t-skeleton>
+
+<!-- 实际内容 -->
+<view class="dt-page" wx:if="{{!loading}}">
+
+  <!-- 封面 -->
+  <view class="dt-cover" style="background: linear-gradient(160deg, {{color}}, {{color}}dd, #5C1010);">
+    <view class="dt-deco"></view>
+    <view class="dt-cover-inner">
+      <t-icon name="{{icon}}" size="36px" color="rgba(255,255,255,0.9)" />
+      <view class="dt-cover-name">{{name}}</view>
+      <view class="dt-cover-line"></view>
+      <view class="dt-cover-desc">舞影纪 · 重庆市群众舞蹈艺术音像资料馆</view>
+    </view>
+  </view>
+
+  <!-- 内容简介 -->
+  <view class="dt-card">
+    <view class="dt-card-title"><view class="dt-bar"></view>内容简介</view>
+    <view class="dt-card-body">{{description}}</view>
+  </view>
+
+  <!-- 折叠面板（政策栏目用） -->
+  <view class="dt-card" wx:if="{{isCollapse && collapseItems.length}}">
+    <view class="dt-card-title"><view class="dt-bar"></view>{{subTitle}}</view>
+    <t-collapse value="{{collapseValue}}" bind:change="onCollapseChange">
+      <t-collapse-panel
+        wx:for="{{collapseItems}}"
+        wx:key="index"
+        value="{{index}}"
+        header="{{item.title}}"
+      >
+        <view class="collapse-content">{{item.content}}</view>
+      </t-collapse-panel>
+    </t-collapse>
+  </view>
+
+  <!-- 普通列表（非政策栏目用） -->
+  <view class="dt-card" wx:if="{{!isCollapse && items.length}}">
+    <view class="dt-card-title"><view class="dt-bar"></view>{{subTitle}}</view>
+    <view class="dt-card-body">
+      <view class="dt-list">
+        <view class="dt-item" wx:for="{{items}}" wx:key="index" wx:for-item="it">
+          <view class="dt-dot"></view>
+          <view class="dt-text">{{it}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 点赞 + 收藏 + 分享 -->
+  <view class="dt-actions">
+    <t-button block class="dt-btn-like {{liked ? 'liked' : ''}}" bindtap="onLike">
+      <t-icon name="{{liked ? 'thumb-up-filled' : 'thumb-up'}}" size="18px" color="{{liked ? '#C41E2A' : '#888'}}" />
+      <text style="margin-left:4px;" class="{{liked ? 'liked-text' : ''}}">赞 {{likeCount}}</text>
+    </t-button>
+    <t-button block class="dt-btn-fav {{favorited ? 'favorited' : ''}}" bindtap="onToggleFav">
+      <t-icon name="{{favorited ? 'star-filled' : 'star'}}" size="18px" color="{{favorited ? '#C4963A' : '#C41E2A'}}" />
+      <text style="margin-left:4px;">{{favorited ? '已收藏' : '收藏'}}</text>
+    </t-button>
+    <t-button block theme="primary" open-type="share">
+      <t-icon name="share" size="14px" color="#fff" style="margin-right:4px;" />
+      分享
+    </t-button>
+  </view>
+
+  <t-divider content-position="center" custom-class="dt-dvd">舞动瞬间 · 数字永存</t-divider>
+
+</view>

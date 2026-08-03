@@ -1,0 +1,28 @@
+<!-- 舞团页（TDesign 版） -->
+<view class="gs-page">
+
+  <t-search
+    value="{{keyword}}"
+    placeholder="搜索区县或艺术团..."
+    bind:change="onSearch"
+    bind:clear="onClear"
+  />
+
+  <scroll-view scroll-x class="filter-bar" enable-flex>
+    <view class="filter-tag {{activeRegion === '全部' ? 'active' : ''}}" data-region="全部" bindtap="switchRegion">全部 <text class="tag-count">({{totalCount}})</text></view>
+    <view class="filter-tag {{activeRegion === item ? 'active' : ''}}" wx:for="{{regions}}" wx:key="*this" data-region="{{item}}" bindtap="switchRegion">{{item}}</view>
+  </scroll-view>
+
+  <view class="list-wrap">
+    <t-cell wx:for="{{filteredDistricts}}" wx:key="slug" arrow="{{true}}" data-name="{{item.name}}" data-tag="{{item.tag}}" data-slug="{{item.slug}}" bind:click="goGroupDetail">
+      <view slot="leftIcon">
+        <view class="cell-rank">{{index + 1}}</view>
+      </view>
+      <view class="cell-name" slot="title">{{item.name}}群众艺术团</view>
+      <view slot="description"><t-tag variant="light" size="small">{{item.tag}}</t-tag></view>
+    </t-cell>
+  </view>
+
+  <t-empty wx:if="{{filteredDistricts.length === 0}}" description="未找到匹配的区县" icon="search" />
+
+</view>

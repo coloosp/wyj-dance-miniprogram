@@ -1,0 +1,25 @@
+<!-- 通用列表页：收藏/观看记录/点赞记录 -->
+<view class="list-page">
+
+  <view class="list-body" wx:if="{{list.length}}">
+    <t-cell
+      wx:for="{{list}}" wx:key="id"
+      title="{{item.name}}"
+      description="{{item.desc}}"
+      arrow="{{true}}"
+      data-id="{{item.id}}"
+      data-name="{{item.name}}"
+      bind:click="goDetail"
+    >
+      <view slot="leftIcon">{{item.icon || '📄'}}</view>
+      <view wx:if="{{config.hasDelete}}" slot="rightIcon" class="list-delete" catchtap="onDelete" data-id="{{item.id}}">
+        <t-icon name="delete" size="16px" color="#ccc" />
+      </view>
+    </t-cell>
+  </view>
+
+  <t-empty wx:else icon="{{config.emptyIcon}}" description="{{config.emptyDesc}}" custom-class="list-empty" />
+
+  <t-divider wx:if="{{config.dividerText}}" content-position="center" custom-class="list-dvd">{{config.dividerText}}</t-divider>
+
+</view>

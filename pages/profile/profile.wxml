@@ -1,0 +1,93 @@
+<!-- 我的 -->
+<view class="pp-page">
+
+  <view class="pp-header">
+    <view class="pp-bg"></view>
+
+    <view class="pp-info" wx:if="{{isLogin}}">
+      <view wx:if="{{userInfo.avatarUrl}}" class="pp-avatar-img">
+        <image src="{{userInfo.avatarUrl}}" mode="aspectFill" class="pp-avatar-pic" />
+      </view>
+      <view wx:else class="pp-avatar-icon">
+        <t-icon name="user" size="28px" color="rgba(255,255,255,0.7)" />
+      </view>
+      <view class="pp-meta">
+        <view class="pp-name">{{userInfo.nickName}}</view>
+      </view>
+    </view>
+
+    <view wx:else class="pp-info pp-info-login" bindtap="handleLogin">
+      <view class="pp-avatar-icon">
+        <t-icon name="user" size="28px" color="rgba(255,255,255,0.7)" />
+      </view>
+      <view class="pp-meta">
+        <view class="pp-name">登录 / 注册</view>
+        <view class="pp-desc">点击授权微信登录</view>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="pp-stats" wx:if="{{isLogin}}">
+    <view class="stat-item"><view class="stat-num">{{stats.collect}}</view><view class="stat-label">收藏</view></view>
+    <view class="stat-divider"></view>
+    <view class="stat-item"><view class="stat-num">{{stats.history}}</view><view class="stat-label">观看记录</view></view>
+    <view class="stat-divider"></view>
+    <view class="stat-item"><view class="stat-num">{{stats.like}}</view><view class="stat-label">点赞</view></view>
+  </view>
+
+  <view class="pp-menu" wx:if="{{isLogin}}">
+    <view class="pp-menu-title">内容管理</view>
+    <t-cell wx:for="{{menuContent}}" wx:key="id" title="{{item.label}}" arrow="{{true}}" data-key="{{item.key}}" bind:click="onMenuTap">
+      <view slot="leftIcon"><t-icon name="{{item.icon}}" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+  </view>
+
+  <view class="pp-menu">
+    <view class="pp-menu-title">其他服务</view>
+    <t-cell wx:for="{{menuService}}" wx:key="id" title="{{item.label}}" arrow="{{true}}" data-key="{{item.key}}" bind:click="onMenuTap">
+      <view slot="leftIcon"><t-icon name="{{item.icon}}" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+    <t-cell wx:if="{{isLogin}}" title="退出登录" arrow="{{true}}" bind:click="onLogout">
+      <view slot="leftIcon"><t-icon name="poweroff" size="18px" color="#C41E2A" /></view>
+    </t-cell>
+  </view>
+
+  <t-divider content-position="center" custom-class="pp-dvd">舞影纪 DanceVerse</t-divider>
+
+</view>
+
+<!-- ===== 登录弹窗 ===== -->
+<view class="login-overlay" wx:if="{{showLogin}}">
+  <view class="login-mask" catchtap="onCloseLogin"></view>
+  <view class="login-dialog">
+    <view class="login-close" catchtap="onCloseLogin">
+      <t-icon name="close" size="16px" color="#999" />
+    </view>
+
+    <view class="login-brand">
+      <t-icon name="logo-miniprogram" size="36px" color="#C41E2A" />
+      <view class="login-brand-name">舞影纪</view>
+    </view>
+
+    <!-- 点头像选择 -->
+    <view class="login-field">
+      <view class="login-field-label">微信头像</view>
+      <button class="login-avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" mode="aspectFill" class="login-pic" />
+        <t-icon wx:else name="user" size="28px" color="#C41E2A" />
+      </button>
+      <view class="login-field-hint">点击选择微信头像</view>
+    </view>
+
+    <!-- 点昵称自动填 -->
+    <view class="login-field">
+      <view class="login-field-label">微信昵称</view>
+      <input class="login-nickname" type="nickname" placeholder="点击获取微信昵称" maxlength="12" bindinput="onNicknameInput" />
+    </view>
+
+    <button class="login-btn" bindtap="onSave">确认登录</button>
+
+    <view class="login-skip" catchtap="onCloseLogin">暂不登录</view>
+  </view>
+</view>

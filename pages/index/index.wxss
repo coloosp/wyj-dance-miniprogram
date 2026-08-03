@@ -1,0 +1,222 @@
+/*
+ * 首页样式（TDesign 版）
+ */
+
+.home-page {
+  padding-bottom: 16px;
+  background: #FFF5F5;
+  min-height: 100vh;
+}
+
+/* ===== Banner 轮播 ===== */
+.home-swiper { height: 180px; }
+
+.swiper-slide {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.swiper-deco {
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.swiper-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.swiper-title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.swiper-subtitle {
+  font-size: 12px;
+  letter-spacing: 2px;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+
+.swiper-slogan {
+  font-size: 12px;
+  letter-spacing: 2px;
+  opacity: 0.75;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.swiper-tag {
+  color: rgba(255,255,255,0.8) !important;
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* ===== NoticeBar 主题覆盖 ===== */
+.home-notice { margin: 12px 16px; border-radius: 10px; overflow: hidden; }
+
+/* ===== 导航主体 ===== */
+.nav-body { padding: 0 16px; }
+
+.nav-group { margin-bottom: 6px; }
+
+/* 组标题 */
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 8px;
+}
+
+.group-title-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.group-bar {
+  width: 3px;
+  height: 14px;
+  background: #C41E2A;
+  border-radius: 1.5px;
+}
+
+.group-title-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+
+.group-body { display: flex; flex-direction: column; gap: 8px; }
+
+/* 标准导航卡片 */
+.nav-card {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03);
+}
+
+.nav-card:active { opacity: 0.7; }
+
+.nav-card-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #FFF5F5, #F9E8E8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.nav-card-info { flex: 1; min-width: 0; }
+.nav-card-name { font-size: 14px; font-weight: 600; color: #2C2C2C; margin-bottom: 2px; }
+.nav-card-desc { font-size: 11px; color: #999; }
+
+/* 区县大卡片 */
+.districts-card {
+  display: flex;
+  align-items: center;
+  background: #FFF5F5;
+  border: 1px solid #F9E0E0;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.districts-card:active { opacity: 0.75; }
+
+.districts-left { display: flex; flex: 1; align-items: flex-start; }
+
+.districts-icon-wrap {
+  width: 44px;
+  height: 44px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 12px;
+  box-shadow: 0 2px 8px rgba(196, 30, 42, 0.1);
+}
+
+.districts-info { flex: 1; }
+.districts-name { font-size: 14px; font-weight: 700; color: #C41E2A; margin-bottom: 2px; }
+.districts-desc { font-size: 11px; color: #888; margin-bottom: 8px; }
+
+.districts-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+
+.dist-tag {
+  font-size: 10px !important;
+  padding: 0 6px !important;
+  line-height: 18px !important;
+  background: #FFF0F0 !important;
+  color: #C41E2A !important;
+  border-color: #F0D0D0 !important;
+}
+
+.districts-more { font-size: 10px; color: #C41E2A; font-weight: 600; }
+
+/* ===== 精品推荐 ===== */
+.featured-section { margin-top: 6px; }
+
+.featured-scroll {
+  display: flex;
+  white-space: nowrap;
+  padding: 10px 0 4px 16px;
+}
+
+.feat-card {
+  display: inline-block;
+  width: 160px;
+  margin-right: 12px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  vertical-align: top;
+}
+
+.feat-thumb {
+  position: relative;
+  width: 160px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feat-img { width: 160px; height: 96px; }
+
+.feat-play {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feat-badge { position: absolute; top: 8px; left: 8px; }
+
+.feat-info { padding: 8px 10px; }
+.feat-title { font-size: 12px; font-weight: 600; color: #2C2C2C; margin-bottom: 3px; }
+.feat-meta { font-size: 10px; color: #999; }

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "设置",
+  "navigationBarBackgroundColor": "#C41E2A",
+  "usingComponents": {
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-dialog": "tdesign-miniprogram/dialog/dialog",
+    "t-divider": "tdesign-miniprogram/divider/divider"
+  }
+}

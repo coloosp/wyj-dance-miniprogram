@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "区县艺术团",
+  "navigationBarBackgroundColor": "#C41E2A",
+  "usingComponents": {
+    "t-search": "tdesign-miniprogram/search/search",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-empty": "tdesign-miniprogram/empty/empty"
+  }
+}

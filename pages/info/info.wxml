@@ -1,0 +1,5 @@
+<view class="info-page">
+  <view class="info-card">
+    <view class="info-text">{{content}}</view>
+  </view>
+</view>

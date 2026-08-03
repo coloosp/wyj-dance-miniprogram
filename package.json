@@ -1,0 +1,9 @@
+{
+  "name": "wyj-dance-miniprogram",
+  "version": "1.0.0",
+  "description": "舞影纪 · 重庆市群众舞蹈艺术音像资料馆",
+  "private": true,
+  "dependencies": {
+    "tdesign-miniprogram": "^1.15.3"
+  }
+}

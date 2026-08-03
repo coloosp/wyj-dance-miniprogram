@@ -1,0 +1,65 @@
+<view class="pl-page">
+  <!-- 视频播放区 -->
+  <view class="pl-video-wrap">
+    <video
+      id="myVideo"
+      src="{{current.src}}"
+      controls
+      autoplay
+      show-center-play-btn="{{false}}"
+      object-fit="contain"
+      direction="{{fullscreen ? 90 : -1}}"
+      bindfullscreenchange="onFullscreen"
+      class="pl-video"
+    >
+      <!-- 弹幕可以用但先保留 -->
+    </video>
+    <!-- 返回按钮（非全屏时显示） -->
+    <view class="pl-back" wx:if="{{!fullscreen}}" catchtap="goBack">
+      <t-icon name="chevron-left" size="22px" color="#fff" />
+    </view>
+  </view>
+
+  <!-- 非全屏时显示下方内容 -->
+  <view class="pl-body" wx:if="{{!fullscreen}}">
+    <!-- 视频信息 -->
+    <view class="pl-info">
+      <view class="pl-title">{{current.title}}</view>
+      <view class="pl-meta">
+        <text>{{current.views}} 次播放</text>
+        <text style="margin-left:12px;">{{current.troupeName}}</text>
+      </view>
+    </view>
+
+    <!-- 视频简介 -->
+    <view class="pl-desc">
+      <view class="pl-desc-title">简介</view>
+      <view class="pl-desc-text">{{current.desc || '还没有简介'}}</view>
+    </view>
+
+    <!-- 相关视频（始终显示） -->
+    <view class="pl-related">
+      <view class="pl-related-title">相关视频</view>
+      <view class="pl-related-list">
+        <view
+          class="pl-rel-item"
+          wx:for="{{related}}" wx:key="title"
+          data-index="{{index}}"
+          bindtap="switchVideo"
+        >
+          <view class="pl-rel-thumb">
+            <t-image width="120px" height="68px" src="{{item.thumb}}" custom-class="pl-rel-img" />
+            <view class="pl-rel-play">
+              <t-icon name="play-circle" size="16px" color="#fff" />
+            </view>
+            <view class="pl-rel-dur" wx:if="{{item.duration}}">{{item.duration}}</view>
+          </view>
+          <view class="pl-rel-info">
+            <view class="pl-rel-name">{{item.title}}</view>
+            <view class="pl-rel-meta">{{item.troupeName}} · {{item.views}} 次播放</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,72 @@
+/* 我的页（TDesign 版） */
+.pp-page { min-height: 100vh; background: #FFF5F5; padding-bottom: 16px; }
+.pp-header { position: relative; background: linear-gradient(160deg, #C41E2A, #8B1A1A); padding: 32px 20px 28px; overflow: hidden; }
+.pp-bg { position: absolute; top: -30px; right: -20px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%; }
+.pp-info { position: relative; z-index: 1; display: flex; align-items: center; }
+.pp-avatar-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; margin-right: 14px; }
+.pp-meta { flex: 1; }
+.pp-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.pp-desc { font-size: 11px; color: rgba(255,255,255,0.7); }
+.pp-stats { display: flex; justify-content: space-around; background: #FFFFFF; margin: -14px 16px 20px; border-radius: 12px; padding: 16px 0; position: relative; z-index: 2; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.stat-item { text-align: center; flex: 1; }
+.stat-num { font-size: 18px; font-weight: 700; color: #C41E2A; margin-bottom: 4px; }
+.stat-label { font-size: 11px; color: #999; }
+.stat-divider { width: 1px; height: 24px; background: #F0E8E8; align-self: center; }
+.pp-menu-title { font-size: 12px; color: #999; padding: 16px 16px 8px; }
+.pp-menu { padding: 0 12px; margin-bottom: 8px; }
+.pp-dvd { margin: 20px 0 !important; color: #bbb !important; font-size: 11px !important; }
+.pp-avatar-img { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; margin-right: 14px; border: 2px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+.pp-avatar-pic { width: 100%; height: 100%; }
+
+/* ===== 授权登录弹窗 ===== */
+.login-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 999; display: flex; align-items: center; justify-content: center;
+}
+.login-mask { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); }
+.login-dialog {
+  position: relative; width: 280px; background: #fff; border-radius: 20px;
+  padding: 32px 24px 20px; text-align: center; z-index: 1;
+}
+.login-close { position: absolute; top: 12px; right: 16px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+
+/* 品牌 */
+.login-brand { margin-bottom: 20px; }
+.login-brand-icon { margin-bottom: 6px; }
+.login-brand-name { font-size: 20px; font-weight: 900; color: #C41E2A; letter-spacing: 3px; }
+.login-brand-desc { font-size: 11px; color: #999; margin-top: 4px; }
+
+/* 输入区域 */
+.login-field { margin-bottom: 16px; text-align: center; }
+.login-field-label { font-size: 12px; color: #666; margin-bottom: 8px; text-align: left; }
+.login-field-hint { font-size: 11px; color: #999; margin-top: 6px; }
+
+/* 头像按钮 */
+.login-avatar-btn {
+  width: 68px; height: 68px; border-radius: 50%; padding: 0; margin: 0 auto;
+  overflow: hidden; background: #FFF5F5; border: 2px solid #F0D0D0; display: flex;
+  align-items: center; justify-content: center;
+}
+.login-avatar-btn::after { border: none; }
+.login-pic { width: 100%; height: 100%; }
+
+/* 昵称输入 */
+.login-nickname {
+  width: 100%; padding: 10px 16px; border-radius: 12px;
+  background: #FFF5F5; border: 1px solid #F0D0D0;
+  font-size: 16px; line-height: 22px; height: 42px;
+  color: #333; text-align: center; box-sizing: border-box;
+}
+.login-nickname::placeholder { color: #bbb; }
+
+/* 登录按钮 */
+.login-btn {
+  width: 100%; padding: 12px; border-radius: 22px;
+  background: linear-gradient(135deg, #C41E2A, #A01822);
+  color: #fff; font-size: 15px; font-weight: 600; border: none; margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(196,30,42,0.3);
+}
+.login-btn::after { border: none; }
+
+/* 跳过 */
+.login-skip { font-size: 12px; color: #bbb; padding: 8px; }

@@ -1,0 +1,127 @@
+<!-- 首页 · TDesign 版 -->
+<view class="home-page">
+
+  <!-- ===== Banner 轮播（原生 Swiper） ===== -->
+  <swiper class="home-swiper" autoplay interval="4000" circular indicator-dots indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
+    <swiper-item wx:for="{{bannerList}}" wx:key="id">
+      <view class="swiper-slide" style="background: {{item.gradient}};">
+        <view class="swiper-deco"></view>
+        <view class="swiper-content">
+          <view class="swiper-title">{{item.title}}</view>
+          <view class="swiper-subtitle" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
+          <view class="swiper-slogan" wx:if="{{item.slogan}}">{{item.slogan}}</view>
+          <t-tag wx:if="{{item.tag}}" variant="outline" size="small" custom-class="swiper-tag">{{item.tag}}</t-tag>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <!-- ===== 公告条（TDesign NoticeBar） ===== -->
+  <t-notice-bar
+    content="{{notices}}"
+    direction="vertical"
+    prefix-icon="notification"
+    visible="{{notices.length > 0}}"
+    custom-class="home-notice"
+  />
+
+  <!-- ===== 分类分组导航 ===== -->
+  <view class="nav-body">
+
+    <view class="nav-group" wx:for="{{navGroups}}" wx:key="id">
+
+      <!-- 组标题 -->
+      <view class="group-header">
+        <view class="group-title-line">
+          <view class="group-bar"></view>
+          <text class="group-title-text">{{item.name}}</text>
+        </view>
+      </view>
+
+      <!-- 普通组卡片 -->
+      <view class="group-body" wx:if="{{item.id !== 'districts'}}">
+        <view
+          class="nav-card"
+          wx:for="{{item.items}}"
+          wx:for-item="it"
+          wx:key="id"
+          data-id="{{it.id}}"
+          data-name="{{it.name}}"
+          catchtap="goDetail"
+        >
+          <view class="nav-card-icon" style="background: {{it.color}}1a;">
+            <t-icon name="{{it.icon}}" size="18px" color="{{it.color}}" />
+          </view>
+          <view class="nav-card-info">
+            <view class="nav-card-name">{{it.name}}</view>
+            <view class="nav-card-desc">{{it.desc}}</view>
+          </view>
+          <t-icon name="chevron-right" size="14px" color="#ddd" />
+        </view>
+      </view>
+
+      <!-- 37个区县艺术团大卡片 -->
+      <view class="group-body" wx:if="{{item.id === 'districts'}}">
+        <view
+          class="districts-card"
+          data-id="{{item.items[0].id}}"
+          data-name="{{item.items[0].name}}"
+          catchtap="goDetail"
+        >
+          <view class="districts-left">
+            <view class="districts-icon-wrap">
+              <t-icon name="usergroup-circle" size="22px" color="#C41E2A" />
+            </view>
+            <view class="districts-info">
+              <view class="districts-name">{{item.items[0].name}}</view>
+              <view class="districts-desc">{{item.items[0].desc}}</view>
+              <view class="districts-tags">
+                <t-tag variant="light" size="small" custom-class="dist-tag">合川</t-tag>
+                <t-tag variant="light" size="small" custom-class="dist-tag">涪陵</t-tag>
+                <t-tag variant="light" size="small" custom-class="dist-tag">北碚</t-tag>
+                <t-tag variant="light" size="small" custom-class="dist-tag">万州</t-tag>
+                <text class="districts-more">+33</text>
+              </view>
+            </view>
+          </view>
+          <t-icon name="chevron-right" size="16px" color="#C41E2A" />
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <!-- ===== 精品推荐 ===== -->
+  <view class="featured-section">
+    <view class="group-header" style="padding: 6px 16px 0;">
+      <view class="group-title-line">
+        <view class="group-bar"></view>
+        <text class="group-title-text">精品推荐</text>
+      </view>
+    </view>
+    <scroll-view scroll-x class="featured-scroll" enable-flex>
+      <view class="feat-card" wx:for="{{featuredList}}" wx:key="id">
+        <view class="feat-thumb">
+          <t-image width="160px" height="96px" custom-class="feat-img" />
+          <view class="feat-play"><t-icon name="play-circle" size="14px" color="#C41E2A" /></view>
+          <t-tag variant="light" size="small" custom-class="feat-badge">{{item.badge}}</t-tag>
+        </view>
+        <view class="feat-info">
+          <view class="feat-title text-ellipsis">{{item.title}}</view>
+          <view class="feat-meta">{{item.views}} 次观看</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- ===== 回到顶部 ===== -->
+  <t-back-top />
+
+  <!-- ===== 底部 ===== -->
+  <view class="page-footer">
+    <view class="brand-line">舞影纪 DanceVerse</view>
+    <view class="sub-line">传承巴渝舞韵 · 弘扬红岩精神</view>
+  </view>
+
+</view>

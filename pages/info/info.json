@@ -1,0 +1,4 @@
+{
+  "navigationBarBackgroundColor": "#C41E2A",
+  "usingComponents": { "t-icon": "tdesign-miniprogram/icon/icon" }
+}

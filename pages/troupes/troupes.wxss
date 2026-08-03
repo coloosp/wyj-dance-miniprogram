@@ -1,0 +1,14 @@
+.tp-page { min-height: 100vh; background: #FFF5F5; padding-bottom: 16px; }
+.tp-header { position: relative; background: linear-gradient(160deg, #C41E2A, #8B1A1A); padding: 28px 20px 24px; text-align: center; color: #fff; overflow: hidden; }
+.tp-header-deco { position: absolute; top: -30px; right: -20px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%; }
+.tp-header-title { font-size: 20px; font-weight: 900; letter-spacing: 3px; position: relative; z-index: 1; }
+.tp-header-desc { font-size: 12px; opacity: 0.8; margin-top: 6px; position: relative; z-index: 1; }
+.tp-list { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.tp-card { display: flex; align-items: center; background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+.tp-card:active { opacity: 0.7; }
+.tp-cover { width: 80px; height: 80px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+.tp-info { flex: 1; margin-left: 12px; min-width: 0; }
+.tp-name { font-size: 14px; font-weight: 600; color: #2C2C2C; margin-bottom: 6px; }
+.tp-meta { display: flex; align-items: center; gap: 8px; }
+.tp-tag { font-size: 10px !important; padding: 0 6px !important; background: #FFF0F0 !important; color: #C41E2A !important; }
+.tp-founder { font-size: 11px; color: #999; }

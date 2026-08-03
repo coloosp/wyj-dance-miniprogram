@@ -1,0 +1,5 @@
+.list-page { min-height: 100vh; background: #FFF5F5; padding-bottom: 16px; }
+.list-body { padding: 8px 12px; }
+.list-delete { display: flex; align-items: center; padding: 0 4px; }
+.list-empty { margin-top: 80px; }
+.list-dvd { margin: 16px 0 !important; color: #ccc !important; font-size: 11px !important; }
