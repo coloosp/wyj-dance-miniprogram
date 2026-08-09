@@ -16,7 +16,7 @@
     >
       <t-image
         width="80px" height="80px"
-        src="/assets/images/troupe_{{index + 1}}.png"
+        src="https://pub-261668b6483a438f8f09a549c5c0e4d1.r2.dev/troupes/troupe_{{index + 1}}.jpg"
         custom-class="tp-cover"
       />
       <view class="tp-info">

@@ -41,8 +41,8 @@ function getUrl(path) {
  * @returns {string} 本地缩略图路径
  */
 function getThumb(id) {
-  // 本地 assets 中的占位图，后续可改为云存储缩略图 URL
-  return `/assets/images/video_${id}.png`
+  // 当前 R2 中上传路径为 videos/videos/video_X.jpg
+  return getUrl(`videos/videos/video_${id}.jpg`)
 }
 
 // ============================================================
