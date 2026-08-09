@@ -29,6 +29,7 @@ const COLORS = {
 const BANNER_LIST = [
   {
     id: 'brand',
+    image: 'https://pub-261668b6483a438f8f09a549c5c0e4d1.r2.dev/banners/banner_1.jpg',
     gradient: 'linear-gradient(160deg, #C41E2A 0%, #8B1A1A 40%, #5C1010 100%)',
     title: '舞影纪',
     subtitle: 'DanceVerse',
@@ -37,6 +38,7 @@ const BANNER_LIST = [
   },
   {
     id: 'event',
+    image: 'https://pub-261668b6483a438f8f09a549c5c0e4d1.r2.dev/banners/banner_2.jpg',
     gradient: 'linear-gradient(160deg, #E88A30 0%, #C47020 100%)',
     title: '全市群众舞蹈展演月',
     subtitle: '2026年8月 · 各区县巡回演出',
@@ -44,6 +46,7 @@ const BANNER_LIST = [
   },
   {
     id: 'featured',
+    image: 'https://pub-261668b6483a438f8f09a549c5c0e4d1.r2.dev/banners/banner_3.jpg',
     gradient: 'linear-gradient(160deg, #8B1A1A 0%, #5C1010 100%)',
     title: '红岩精神舞蹈创作研讨会',
     subtitle: '传承红色基因 · 舞动时代脉搏',

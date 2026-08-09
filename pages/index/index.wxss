@@ -20,14 +20,21 @@
   overflow: hidden;
 }
 
-.swiper-deco {
+.swiper-bg {
   position: absolute;
-  top: -40px;
-  right: -30px;
-  width: 160px;
-  height: 160px;
-  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-  border-radius: 50%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.1) 0%, rgba(20, 20, 20, 0.5) 100%);
 }
 
 .swiper-content {

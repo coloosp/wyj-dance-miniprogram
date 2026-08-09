@@ -5,7 +5,8 @@
   <swiper class="home-swiper" autoplay interval="4000" circular indicator-dots indicator-color="rgba(255,255,255,0.3)" indicator-active-color="#fff">
     <swiper-item wx:for="{{bannerList}}" wx:key="id">
       <view class="swiper-slide" style="background: {{item.gradient}};">
-        <view class="swiper-deco"></view>
+        <image class="swiper-bg" src="{{item.image}}" mode="aspectFill" />
+        <view class="swiper-mask"></view>
         <view class="swiper-content">
           <view class="swiper-title">{{item.title}}</view>
           <view class="swiper-subtitle" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
