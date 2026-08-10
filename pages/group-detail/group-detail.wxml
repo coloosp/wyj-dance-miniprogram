@@ -36,7 +36,7 @@
     <view class="gd-title"><view class="gd-bar"></view>演出视频（{{videos.length}}）</view>
     <view class="gd-video-list">
       <view class="gd-video" wx:for="{{videos}}" wx:key="title"
-      data-src="{{item.src}}" data-title="{{item.title}}" data-views="{{item.views}}" data-thumb="{{item.thumb}}" data-index="{{index}}" bindtap="playVideo">
+      data-id="{{item.id}}" data-src="{{item.src}}" data-title="{{item.title}}" data-views="{{item.views}}" data-thumb="{{item.thumb}}" data-index="{{index}}" bindtap="playVideo">
         <image src="{{item.thumb}}" mode="aspectFill" class="gd-video-thumb" />
         <view class="gd-video-play">
           <t-icon name="play-circle" size="22px" color="#fff" />

@@ -21,3 +21,16 @@
 .pl-desc { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
 .pl-desc-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
 .pl-desc-text { font-size: 13px; color: #666; line-height: 1.8; }
+.pl-comments { padding: 16px; border-bottom: 1px solid #f0f0f0; }
+.pl-comments-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+.pl-comment-loading { font-size: 12px; color: #999; padding: 8px 0; }
+.pl-comment-empty { font-size: 13px; color: #999; text-align: center; padding: 18px 0; }
+.pl-comment-item { padding: 10px 0; border-bottom: 1px dashed #f0f0f0; }
+.pl-comment-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.pl-comment-name { font-size: 13px; font-weight: 600; color: #2c2c2c; }
+.pl-comment-time { font-size: 11px; color: #aaa; }
+.pl-comment-content { font-size: 13px; color: #444; line-height: 1.6; word-break: break-all; }
+.pl-comment-editor { display: flex; align-items: flex-end; gap: 10px; margin-top: 12px; }
+.pl-comment-input { flex: 1; min-width: 0; height: 64px; background: #f7f7f7; border-radius: 8px; padding: 10px; font-size: 13px; box-sizing: border-box; }
+.pl-comment-send { flex-shrink: 0; margin: 0; background: #C41E2A; color: #fff; border-radius: 8px; padding: 0 18px; line-height: 36px; font-size: 13px; }
+.pl-comment-send::after { border: none; }

@@ -25,15 +25,15 @@ Page({
   },
 
   playVideo(e) {
-    const { src, title, views, thumb } = e.currentTarget.dataset
+    const { id, src, title, views, thumb } = e.currentTarget.dataset
     const troupeName = this.data.name
     if (!src) {
       wx.showToast({ title: '视频暂未上传', icon: 'none' })
       return
     }
-    let url = `/pages/player/player?src=${encodeURIComponent(src)}&title=${encodeURIComponent(title || '')}&troupe=${encodeURIComponent(troupeName)}&views=${views || 0}`
+    let url = `/pages/player/player?id=${encodeURIComponent(id || '')}&src=${encodeURIComponent(src)}&title=${encodeURIComponent(title || '')}&troupe=${encodeURIComponent(troupeName)}&views=${views || 0}`
     this.data.videos.forEach((v, i) => {
-      url += `&r${i}_src=${encodeURIComponent(v.src || '')}&r${i}_title=${encodeURIComponent(v.title)}&r${i}_troupe=${encodeURIComponent(troupeName)}&r${i}_views=${v.views || '0'}&r${i}_thumb=${encodeURIComponent(v.thumb || '')}`
+      url += `&r${i}_id=${encodeURIComponent(v.id || '')}&r${i}_src=${encodeURIComponent(v.src || '')}&r${i}_title=${encodeURIComponent(v.title)}&r${i}_troupe=${encodeURIComponent(troupeName)}&r${i}_views=${v.views || '0'}&r${i}_thumb=${encodeURIComponent(v.thumb || '')}`
     })
     wx.navigateTo({ url })
   }

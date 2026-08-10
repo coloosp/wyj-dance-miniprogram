@@ -10,13 +10,26 @@ function api(path, options = {}) {
         method: options.method || 'GET',
         data: options.data || {}
       },
-      success: (res) => resolve(res.result),
-      fail: reject
+      success: (res) => {
+        const result = res.result
+        if (result && result.error) {
+          console.error('[api]', path, result.error)
+          reject(new Error(result.error))
+        } else {
+          resolve(result)
+        }
+      },
+      fail: (err) => {
+        console.error('[api]', path, err)
+        reject(err)
+      }
     })
   })
 }
 
 App({
+  api,
+
   onLaunch() {
     // 初始化云开发（仅用于代理云函数）
     if (wx.cloud) {

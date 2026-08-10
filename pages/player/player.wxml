@@ -37,6 +37,27 @@
       <view class="pl-desc-text">{{current.desc || '还没有简介'}}</view>
     </view>
 
+    <!-- 评论区 -->
+    <view class="pl-comments">
+      <view class="pl-comments-title">评论 ({{commentTotal}})</view>
+      <view class="pl-comment-loading" wx:if="{{loadingComments}}">加载中...</view>
+      <view class="pl-comment-list" wx:elif="{{comments.length > 0}}">
+        <view class="pl-comment-item" wx:for="{{comments}}" wx:key="id">
+          <view class="pl-comment-meta">
+            <text class="pl-comment-name">{{item.nickname}}</text>
+            <text class="pl-comment-time">{{item.timeText}}</text>
+          </view>
+          <view class="pl-comment-content">{{item.content}}</view>
+        </view>
+      </view>
+      <view class="pl-comment-empty" wx:else>暂无评论，快来抢沙发</view>
+
+      <view class="pl-comment-editor">
+        <textarea class="pl-comment-input" value="{{commentText}}" maxlength="200" placeholder="说点什么..." bindinput="onCommentInput" />
+        <button class="pl-comment-send" size="mini" loading="{{submitting}}" bindtap="submitComment">发送</button>
+      </view>
+    </view>
+
     <!-- 相关视频（始终显示） -->
     <view class="pl-related">
       <view class="pl-related-title">相关视频</view>

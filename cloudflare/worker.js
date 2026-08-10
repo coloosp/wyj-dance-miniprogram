@@ -34,6 +34,38 @@ export default {
         return json(result, 200, cors)
       }
 
+      // ---- GET /api/comments?video=xxx ----
+      if (path === '/api/comments' && method === 'GET') {
+        const video = url.searchParams.get('video') || ''
+        if (!video) return json({ error: 'missing video' }, 400, cors)
+        const rows = await env.DB.prepare(
+          'SELECT id, nickname, content, created_at FROM comments WHERE video_id = ? AND status = 1 ORDER BY created_at DESC, id DESC LIMIT 50'
+        ).bind(video).all()
+        const totalRow = await env.DB.prepare(
+          'SELECT COUNT(*) AS total FROM comments WHERE video_id = ? AND status = 1'
+        ).bind(video).first()
+        return json({ list: rows.results || [], total: totalRow.total || 0 }, 200, cors)
+      }
+
+      // ---- POST /api/comments ----
+      if (path === '/api/comments' && method === 'POST') {
+        const body = await request.json()
+        const video = String(body.video || '').trim()
+        const content = String(body.content || '').trim()
+        const openid = String(body.openid || 'anonymous').slice(0, 128)
+        const nickname = String(body.nickname || '舞友').trim().slice(0, 30) || '舞友'
+        if (!video) return json({ error: 'missing video' }, 400, cors)
+        if (!content || content.length > 200) return json({ error: 'content too long' }, 400, cors)
+        const res = await env.DB.prepare(
+          'INSERT INTO comments (video_id, openid, nickname, content) VALUES (?, ?, ?, ?)'
+        ).bind(video, openid, nickname, content).run()
+        const id = res.meta.last_row_id
+        const comment = await env.DB.prepare(
+          'SELECT id, nickname, content, created_at FROM comments WHERE id = ?'
+        ).bind(id).first()
+        return json({ comment }, 200, cors)
+      }
+
       // ---- GET /api/likes?id=xxx ----
       if (path === '/api/likes' && method === 'GET') {
         const id = url.searchParams.get('id')
