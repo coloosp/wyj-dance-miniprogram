@@ -7,3 +7,11 @@ assets/images/
 .DS_Store
 Thumbs.db
 videos/
+# 本地/工具文件
+.agents/
+project.private.config.json
+skills-lock.json
+图片识别/
+extraK/
+*.pdf
+*.pptx
