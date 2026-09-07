@@ -8,6 +8,28 @@ function formatTime(value) {
   return `${d.getMonth() + 1}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
+function decorateReply(reply) {
+  return {
+    ...reply,
+    timeText: formatTime(reply.created_at),
+    avatarText: (reply.nickname || '舞').slice(0, 1)
+  }
+}
+
+function decorateComment(comment) {
+  const replies = (comment.replies || []).map(decorateReply)
+  const replyCount = comment.reply_count || replies.length
+  return {
+    ...comment,
+    timeText: formatTime(comment.created_at),
+    avatarText: (comment.nickname || '舞').slice(0, 1),
+    replies,
+    previewReplies: replies.slice(0, 3),
+    expanded: false,
+    replyToggleText: '查看全部 ' + replyCount + ' 条回复'
+  }
+}
+
 Page({
   data: {
     fullscreen: false,
@@ -16,9 +38,23 @@ Page({
     videoId: '',
     comments: [],
     commentText: '',
+    replyText: '',
+    replyingTo: null,
+    replyFocused: false,
     commentTotal: 0,
     submitting: false,
-    loadingComments: true
+    loadingComments: true,
+    likingId: '',
+    myAvatar: '',
+    myNickname: '',
+    myAvatarText: '舞',
+    playCount: 0,
+    likeCount: 0,
+    videoLiked: false,
+    videoToggling: false,
+    videoFavorited: false,
+    videoFavoriting: false,
+    favoriteCount: 0
   },
 
   onLoad(o) {
@@ -46,9 +82,40 @@ Page({
       i++
     }
 
+    const profile = app.getUserProfile()
+    if (profile.nickName) app.syncUserProfile()
+
     const videoId = current.id || current.title
-    this.setData({ current, related, videoId })
+    this.setData({
+      current,
+      related,
+      videoId,
+      myAvatar: profile.avatarUrl || '',
+      myNickname: profile.nickName || '',
+      myAvatarText: (profile.nickName || '舞').slice(0, 1),
+      videoFavorited: current.src ? app.isFavorited('video_' + videoId) : false
+    })
+
+    if (current.src) {
+      app.addHistory({
+        id: 'video_' + videoId,
+        videoId,
+        kind: 'video',
+        name: current.title,
+        desc: current.desc || '',
+        src: current.src,
+        thumb: current.thumb,
+        troupe: current.troupeName,
+        views: current.views,
+        icon: '🎬'
+      })
+    }
     wx.setNavigationBarTitle({ title: current.title })
+    if (current.src) {
+      this.recordVideoView(videoId)
+    } else {
+      this.loadVideoStats(videoId)
+    }
     this.loadComments()
   },
 
@@ -60,7 +127,7 @@ Page({
     this.setData({ loadingComments: true })
     try {
       const data = await app.api('/api/comments', { data: { video: this.data.videoId } })
-      const comments = (data.list || []).map(c => ({ ...c, timeText: formatTime(c.created_at) }))
+      const comments = (data.list || []).map(decorateComment)
       this.setData({
         comments,
         commentTotal: data.total || comments.length,
@@ -73,12 +140,97 @@ Page({
     }
   },
 
+  async loadVideoStats(videoId) {
+    const id = videoId || this.data.videoId
+    if (!id) return
+    try {
+      const data = await app.api('/api/video/stats', { data: { id } })
+      this.setData({
+        playCount: data.play_count || 0,
+        likeCount: data.like_count || 0,
+        videoLiked: !!data.liked
+      })
+    } catch (e) {
+      console.error('[player] loadVideoStats', e)
+    }
+  },
+
+  async recordVideoView(videoId) {
+    const id = videoId || this.data.videoId
+    if (!id || !this.data.current.src) return
+    try {
+      const data = await app.api('/api/video/view', {
+        method: 'POST',
+        data: { id }
+      })
+      this.setData({
+        playCount: data.play_count || 0,
+        likeCount: data.like_count || 0,
+        videoLiked: !!data.liked
+      })
+    } catch (e) {
+      console.error('[player] recordVideoView', e)
+      this.loadVideoStats(id)
+    }
+  },
+
+  async toggleVideoLike() {
+    const id = this.data.videoId
+    if (!id || this.data.videoToggling) return
+    this.setData({ videoToggling: true })
+    try {
+      const data = await app.api('/api/video/like', {
+        method: 'POST',
+        data: { id, liked: !this.data.videoLiked }
+      })
+      const cur = this.data.current
+      const fid = 'video_' + id
+      if (data.liked) {
+        app.addLikeHistory({ id: fid, videoId: id, kind: 'video', name: cur.title || '视频', desc: cur.desc || '', src: cur.src, thumb: cur.thumb, troupe: cur.troupeName, views: cur.views, icon: '🎬' })
+      } else {
+        app.removeLikeHistory(fid)
+      }
+      this.setData({
+        likeCount: data.like_count || 0,
+        videoLiked: !!data.liked
+      })
+    } catch (e) {
+      console.error('[player] toggleVideoLike', e)
+      wx.showToast({ title: '点赞失败', icon: 'none' })
+    } finally {
+      this.setData({ videoToggling: false })
+    }
+  },
   onCommentInput(e) {
     this.setData({ commentText: e.detail.value })
   },
 
+  onReplyInput(e) {
+    this.setData({ replyText: e.detail.value })
+  },
+
+  openReply(e) {
+    const { parentId, nickname } = e.currentTarget.dataset
+    this.setData({ replyingTo: { commentId: parentId, nickname }, replyText: '', replyFocused: true })
+  },
+
+  cancelReply() {
+    this.setData({ replyingTo: null, replyText: '', replyFocused: false })
+  },
+
+  toggleReplies(e) {
+    const index = e.currentTarget.dataset.index
+    const comments = [...this.data.comments]
+    comments[index].expanded = !comments[index].expanded
+    comments[index].replyToggleText = comments[index].expanded
+      ? '收起回复'
+      : '查看全部 ' + comments[index].reply_count + ' 条回复'
+    this.setData({ comments })
+  },
+
   async submitComment() {
-    const content = (this.data.commentText || '').trim()
+    const isReply = !!this.data.replyingTo
+    const content = ((isReply ? this.data.replyText : this.data.commentText) || '').trim()
     if (!content) {
       wx.showToast({ title: '请输入评论内容', icon: 'none' })
       return
@@ -89,6 +241,7 @@ Page({
     }
     if (this.data.submitting) return
 
+    const profile = app.getUserProfile()
     this.setData({ submitting: true })
     try {
       const data = await app.api('/api/comments', {
@@ -96,17 +249,40 @@ Page({
         data: {
           video: this.data.videoId,
           content,
-          openid: app.getUserId(),
-          nickname: '舞友'
+          parent_id: isReply ? this.data.replyingTo.commentId : '',
+          reply_to_nickname: isReply ? this.data.replyingTo.nickname : '',
+          nickname: profile.nickName || '',
+          avatar: profile.avatarUrl || ''
         }
       })
       if (data.comment) {
-        const comment = { ...data.comment, timeText: formatTime(data.comment.created_at) }
-        this.setData({
-          comments: [comment, ...this.data.comments],
-          commentTotal: this.data.commentTotal + 1,
-          commentText: ''
-        })
+        if (isReply) {
+          const comments = [...this.data.comments]
+          const index = comments.findIndex(item => item.id === this.data.replyingTo.commentId)
+          if (index > -1) {
+            const reply = decorateReply(data.comment)
+            comments[index].replies = [...comments[index].replies, reply]
+            comments[index].previewReplies = comments[index].replies.slice(0, 3)
+            comments[index].reply_count = (comments[index].reply_count || 0) + 1
+            comments[index].replyToggleText = comments[index].expanded
+              ? '收起回复'
+              : '查看全部 ' + comments[index].reply_count + ' 条回复'
+            this.setData({
+              comments,
+              commentTotal: this.data.commentTotal + 1,
+              replyText: '',
+              replyingTo: null,
+              replyFocused: false
+            })
+          }
+        } else {
+          const comment = decorateComment({ ...data.comment, replies: [] })
+          this.setData({
+            comments: [comment, ...this.data.comments],
+            commentTotal: this.data.commentTotal + 1,
+            commentText: ''
+          })
+        }
         wx.showToast({ title: '评论成功', icon: 'success' })
       } else {
         wx.showToast({ title: data.error || '评论失败', icon: 'none' })
@@ -119,6 +295,83 @@ Page({
     }
   },
 
+  async toggleCommentLike(e) {
+    const { id, parentIndex, replyIndex } = e.currentTarget.dataset
+    if (!id || this.data.likingId) return
+
+    const isReply = replyIndex !== undefined
+    const comment = this.data.comments[parentIndex]
+    if (!comment) return
+    const target = isReply ? comment.replies[replyIndex] : comment
+    if (!target) return
+
+    this.setData({ likingId: id })
+    try {
+      const data = await app.api('/api/comments/like', {
+        method: 'POST',
+        data: { comment_id: id, liked: !target.liked }
+      })
+      if (isReply) {
+        const patch = {}
+        patch[`comments[${parentIndex}].replies[${replyIndex}].liked`] = data.liked
+        patch[`comments[${parentIndex}].replies[${replyIndex}].like_count`] = data.like_count
+        this.setData(patch)
+      } else {
+        const patch = {}
+        patch[`comments[${parentIndex}].liked`] = data.liked
+        patch[`comments[${parentIndex}].like_count`] = data.like_count
+        this.setData(patch)
+      }
+    } catch (err) {
+      console.error('[player] toggleCommentLike', err)
+      wx.showToast({ title: '点赞失败', icon: 'none' })
+    } finally {
+      this.setData({ likingId: '' })
+    }
+  },
+
+  async toggleVideoFavorite() {
+    const id = this.data.videoId
+    const cur = this.data.current
+    const fid = 'video_' + id
+    const willFavorite = !this.data.videoFavorited
+    const item = {
+      id: fid,
+      videoId: id,
+      kind: 'video',
+      name: cur.title || '未命名视频',
+      desc: cur.desc || '',
+      src: cur.src,
+      thumb: cur.thumb,
+      troupe: cur.troupeName,
+      views: cur.views,
+      icon: '🎬'
+    }
+    const result = app.toggleFavorite(item)
+    app.saveFavorites(result.list)
+    this.setData({ videoFavorited: willFavorite, videoFavoriting: true })
+    try {
+      const data = await app.api('/api/video/favorite', {
+        method: 'POST',
+        data: { id, favorited: willFavorite }
+      })
+      this.setData({ favoriteCount: data.favorite_count || 0 })
+    } catch (e) {
+      console.error('[player] toggleVideoFavorite', e)
+    } finally {
+      this.setData({ videoFavoriting: false })
+      wx.showToast({ title: willFavorite ? '已收藏' : '已取消收藏', icon: 'none' })
+    }
+  },
+
+  onShareAppMessage() {
+    const cur = this.data.current
+    const id = this.data.videoId
+    return {
+      title: cur.title || '舞影纪',
+      path: `/pages/player/player?id=${encodeURIComponent(id || '')}&src=${encodeURIComponent(cur.src || '')}&title=${encodeURIComponent(cur.title || '')}&troupe=${encodeURIComponent(cur.troupeName || '')}&views=${cur.views || 0}&thumb=${encodeURIComponent(cur.thumb || '')}`
+    }
+  },
   onFullscreen(e) {
     this.setData({ fullscreen: e.detail.fullScreen })
   },
@@ -134,10 +387,16 @@ Page({
     this.setData({
       current: item,
       related: oldList,
-      videoId: item.id || item.title
+      videoId: item.id || item.title,
+      comments: [],
+      commentText: '',
+      replyText: '',
+      replyingTo: null,
+      replyFocused: false
     })
     wx.setNavigationBarTitle({ title: item.title })
     wx.pageScrollTo({ scrollTop: 0 })
+    this.recordVideoView()
     this.loadComments()
   },
 

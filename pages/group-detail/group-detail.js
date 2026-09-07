@@ -1,7 +1,31 @@
+const app = getApp()
 const { getDisplayList } = require('../../data/videos.js')
 
+const TIP_AMOUNTS = [
+  { value: 0.66, label: '0.66', desc: '小小心意' },
+  { value: 6.6, label: '6.6', desc: '支持演出' },
+  { value: 16.6, label: '16.6', desc: '助力舞团' }
+]
+
 Page({
-  data: { name:'', tag:'', founder:'', district:'', programs:[], videos:[] },
+  data: {
+    name: '', tag: '', founder: '', district: '', programs: [], videos: [],
+    tipAmounts: TIP_AMOUNTS,
+    selectedTip: 6.6,
+    showTip: false,
+    tipPaying: false,
+    tipSuccess: false,
+    tipOrderNo: '',
+    tipAmountText: '',
+    sortBy: 'updated',
+    sortOptions: [
+      { key: 'updated', label: '更新时间' },
+      { key: 'plays', label: '播放量' },
+      { key: 'likes', label: '点赞' },
+      { key: 'favs', label: '收藏' }
+    ],
+    videoStatsLoading: false
+  },
 
   onLoad(options) {
     const name = options.name || ''
@@ -22,6 +46,7 @@ Page({
 
     this.setData({ name, tag, founder, district, programs, videos })
     wx.setNavigationBarTitle({ title: name })
+    this.loadVideoStats()
   },
 
   playVideo(e) {
@@ -36,5 +61,105 @@ Page({
       url += `&r${i}_id=${encodeURIComponent(v.id || '')}&r${i}_src=${encodeURIComponent(v.src || '')}&r${i}_title=${encodeURIComponent(v.title)}&r${i}_troupe=${encodeURIComponent(troupeName)}&r${i}_views=${v.views || '0'}&r${i}_thumb=${encodeURIComponent(v.thumb || '')}`
     })
     wx.navigateTo({ url })
+  },
+
+  onShow() {
+    if (this.data.videos.length) this.loadVideoStats()
+  },
+
+  async loadVideoStats() {
+    if (this.data.videoStatsLoading) return
+    this.setData({ videoStatsLoading: true })
+    try {
+      const results = await Promise.all(this.data.videos.map(async v => {
+        if (!v.id) return { ...v, playCount: 0, likeCount: 0, favCount: 0 }
+        try {
+          const data = await app.api('/api/video/stats', { data: { id: v.id } })
+          return {
+            ...v,
+            playCount: data.play_count || 0,
+            likeCount: data.like_count || 0,
+            favCount: data.favorite_count || 0
+          }
+        } catch (e) {
+          return { ...v, playCount: 0, likeCount: 0, favCount: 0 }
+        }
+      }))
+      this.setData({ videos: results })
+      this.applySort()
+    } catch (e) {
+      console.error('[group-detail] loadVideoStats', e)
+    } finally {
+      this.setData({ videoStatsLoading: false })
+    }
+  },
+
+  setSort(e) {
+    this.setData({ sortBy: e.currentTarget.dataset.key })
+    this.applySort()
+  },
+
+  applySort() {
+    const sortBy = this.data.sortBy
+    const list = [...this.data.videos]
+    const sortable = list.filter(v => !!v.src)
+    const placeholder = list.filter(v => !v.src)
+
+    sortable.sort((a, b) => {
+      if (sortBy === 'updated') {
+        return String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))
+      }
+      if (sortBy === 'plays') return (b.playCount || 0) - (a.playCount || 0)
+      if (sortBy === 'likes') return (b.likeCount || 0) - (a.likeCount || 0)
+      if (sortBy === 'favs') return (b.favCount || 0) - (a.favCount || 0)
+      return 0
+    })
+
+    this.setData({ videos: sortable.concat(placeholder) })
+  },
+  openTip() {
+    this.setData({ showTip: true, tipSuccess: false, tipPaying: false, tipOrderNo: '' })
+  },
+
+  closeTip() {
+    if (this.data.tipPaying) return
+    this.setData({ showTip: false, tipSuccess: false, tipOrderNo: '' })
+  },
+
+  onChooseTip(e) {
+    this.setData({ selectedTip: Number(e.currentTarget.dataset.value) })
+  },
+
+  confirmTip() {
+    if (this.data.tipPaying) return
+    const amount = this.data.selectedTip
+    this.setData({ tipPaying: true })
+    setTimeout(() => {
+      const orderNo = 'WYT' + Date.now()
+      this.saveTipRecord(amount, orderNo)
+      this.setData({
+        tipPaying: false,
+        tipSuccess: true,
+        tipOrderNo: orderNo,
+        tipAmountText: amount.toFixed(2)
+      })
+    }, 900)
+  },
+
+  finishTip() {
+    this.setData({ showTip: false, tipSuccess: false, tipOrderNo: '', tipAmountText: '' })
+  },
+
+  saveTipRecord(amount, orderNo) {
+    const raw = wx.getStorageSync('wyj_tips')
+    const list = raw ? JSON.parse(raw) : []
+    list.unshift({
+      id: orderNo,
+      troupeName: this.data.name,
+      district: this.data.district,
+      amount,
+      time: Date.now()
+    })
+    wx.setStorageSync('wyj_tips', JSON.stringify(list.slice(0, 50)))
   }
 })

@@ -13,7 +13,7 @@ Page({
   },
 
   onConfirmClear() {
-    ['wyj_favorites', 'wyj_history', 'wyj_likeHistory', 'wyj_myLikes', 'wyj_user', 'wyj_openid', 'wyj_uid'].forEach(k => {
+    ['wyj_favorites', 'wyj_history', 'wyj_likeHistory', 'wyj_myLikes', 'wyj_user', 'wyj_openid', 'wyj_uid', 'wyj_tips'].forEach(k => {
       wx.removeStorageSync(k)
     })
     this.setData({ showDialog: false })

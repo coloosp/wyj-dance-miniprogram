@@ -1,4 +1,7 @@
 .list-page { min-height: 100vh; background: #FFF5F5; padding-bottom: 16px; }
+.list-tabs { display: flex; margin: 10px 12px 0; background: #F7E6E6; border-radius: 10px; padding: 4px; }
+.list-tab { flex: 1; text-align: center; font-size: 13px; color: #888; padding: 8px 0; border-radius: 8px; }
+.list-tab.active { background: #fff; color: #C41E2A; font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 .list-body { padding: 8px 12px; }
 .list-delete { display: flex; align-items: center; padding: 0 4px; }
 .list-empty { margin-top: 80px; }

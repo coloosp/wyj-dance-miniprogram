@@ -69,6 +69,52 @@ App({
     return wx.getStorageSync('wyj_openid') || wx.getStorageSync('wyj_uid') || 'anonymous'
   },
 
+  getUserProfile() {
+    const saved = wx.getStorageSync('wyj_user')
+    return saved && saved.userInfo ? saved.userInfo : { nickName: '', avatarUrl: '' }
+  },
+
+  async syncUserProfile() {
+    const userInfo = this.getUserProfile()
+    const openid = this.getUserId()
+    if (!userInfo.nickName) return
+
+    let avatar = userInfo.avatarUrl || ''
+    const isLocalPath = avatar && !avatar.startsWith('cloud://') && (
+      avatar.indexOf('http://tmp') === 0 ||
+      avatar.indexOf('wxfile://') === 0 ||
+      avatar.indexOf('/') === 0
+    )
+
+    if (isLocalPath) {
+      try {
+        const upload = await new Promise((resolve, reject) => {
+          wx.cloud.uploadFile({
+            cloudPath: `avatars/${openid}_${Date.now()}.jpg`,
+            filePath: avatar,
+            success: resolve,
+            fail: reject
+          })
+        })
+        avatar = upload.fileID
+        const saved = wx.getStorageSync('wyj_user') || {}
+        saved.userInfo = { ...saved.userInfo, avatarUrl: avatar }
+        wx.setStorageSync('wyj_user', saved)
+      } catch (e) {
+        console.error('[profile] avatar upload failed', e)
+      }
+    }
+
+    try {
+      await this.api('/api/users/sync', {
+        method: 'POST',
+        data: { nickname: userInfo.nickName, avatar }
+      })
+    } catch (e) {
+      console.error('[profile] sync failed', e)
+    }
+  },
+
   globalData: {
     brand: {
       name: '舞影纪',

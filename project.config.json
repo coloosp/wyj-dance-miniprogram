@@ -9,6 +9,8 @@
       { "type": "folder", "value": ".agents" },
       { "type": "folder", "value": ".claude" },
       { "type": "folder", "value": "cloudflare" },
+      { "type": "folder", "value": "assets/images" },
+      { "type": "folder", "value": "二维码" },
       { "type": "file", "value": "*.zip" },
       { "type": "file", "value": "*.py" },
       { "type": "file", "value": "*.bat" },

@@ -55,34 +55,38 @@ const VIDEO_LIST = [
     title: '《巴渝欢歌》· 云存储测试',
     file: '1062598260-1-192.mp4',   // 文件名，通过 getUrl() 拼合
     views: '测试',
-    desc: ''
+    desc: '',
+    updatedAt: '2026-08-10 12:00:00'
   },
   {
     id: 2,
     title: '《两江春韵》',
     file: '',
     views: '1,560',
-    desc: ''
+    desc: '',
+    updatedAt: '2026-08-10 11:00:00'
   },
   {
     id: 3,
     title: '《红梅赞》',
     file: '',
     views: '4,200',
-    desc: ''
+    desc: '',
+    updatedAt: '2026-08-10 10:00:00'
   },
   {
     id: 4,
     title: '《山城记忆》',
     file: '',
     views: '980',
-    desc: ''
+    desc: '',
+    updatedAt: '2026-08-10 09:00:00'
   }
 ]
 
 /**
  * 获取所有视频的展示数据（供页面直接使用）
- * @returns {Array<{id, title, thumb, src, views, desc}>}
+ * @returns {Array<{id, title, thumb, src, views, desc, updatedAt}>}
  */
 function getDisplayList() {
   return VIDEO_LIST.map(v => ({
@@ -91,7 +95,8 @@ function getDisplayList() {
     thumb: getThumb(v.id),
     src: getUrl(v.file),
     views: v.views,
-    desc: v.desc
+    desc: v.desc,
+    updatedAt: v.updatedAt || ''
   }))
 }
 

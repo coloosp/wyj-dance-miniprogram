@@ -13,6 +13,15 @@
     </view>
   </view>
 
+  <!-- 支持舞团 -->
+  <view class="gd-support">
+    <view class="gd-support-info">
+      <view class="gd-support-title">支持「{{name}}」</view>
+      <view class="gd-support-sub">0.66 / 6.6 / 16.6 元 · 演示模式</view>
+    </view>
+    <view class="gd-support-btn" bindtap="openTip">去支持</view>
+  </view>
+
   <!-- 节目目录 -->
   <view class="gd-card">
     <view class="gd-title"><view class="gd-bar"></view>节目目录（{{programs.length}}）</view>
@@ -34,6 +43,15 @@
   <!-- 演出视频 -->
   <view class="gd-card">
     <view class="gd-title"><view class="gd-bar"></view>演出视频（{{videos.length}}）</view>
+    <view class="gd-video-sort">
+      <view
+        class="gd-video-sort-item {{sortBy === item.key ? 'active' : ''}}"
+        wx:for="{{sortOptions}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="setSort"
+      >{{item.label}}</view>
+    </view>
     <view class="gd-video-list">
       <view class="gd-video" wx:for="{{videos}}" wx:key="title"
       data-id="{{item.id}}" data-src="{{item.src}}" data-title="{{item.title}}" data-views="{{item.views}}" data-thumb="{{item.thumb}}" data-index="{{index}}" bindtap="playVideo">
@@ -43,9 +61,52 @@
         </view>
         <view class="gd-video-info">
           <view class="gd-video-title">{{item.title}}</view>
-          <view class="gd-video-views">{{item.views}} 次观看</view>
+          <view class="gd-video-views">{{item.playCount || item.views}} 次观看</view>
         </view>
       </view>
+    </view>
+  </view>
+
+  <!-- 支持舞团弹窗 -->
+  <view class="tip-overlay" wx:if="{{showTip}}">
+    <view class="tip-mask" catchtap="closeTip"></view>
+    <view class="tip-dialog">
+      <block wx:if="{{!tipSuccess}}">
+        <view class="tip-title">支持「{{name}}」</view>
+        <view class="tip-sub">选择金额后仅展示模拟成功</view>
+        <view class="tip-amount-list">
+          <view
+            class="tip-amount {{selectedTip === item.value ? 'active' : ''}}"
+            wx:for="{{tipAmounts}}"
+            wx:key="value"
+            data-value="{{item.value}}"
+            bindtap="onChooseTip"
+          >
+            <view class="tip-amount-label">{{item.label}}</view>
+            <view class="tip-amount-unit">元</view>
+            <view class="tip-amount-desc">{{item.desc}}</view>
+          </view>
+        </view>
+        <view class="tip-selected">
+          <text>支持金额</text>
+          <text class="tip-selected-value">¥ {{selectedTip}}</text>
+        </view>
+        <button class="tip-confirm" loading="{{tipPaying}}" disabled="{{tipPaying}}" bindtap="confirmTip">
+          {{tipPaying ? '处理中...' : '确认支持（虚拟）'}}
+        </button>
+        <view class="tip-note">不会发起真实付款</view>
+      </block>
+
+      <block wx:else>
+        <view class="tip-success-icon">
+          <t-icon name="check-circle-filled" size="44px" color="#18A058" />
+        </view>
+        <view class="tip-success-title">支持成功</view>
+        <view class="tip-success-amount">¥ {{tipAmountText}}</view>
+        <view class="tip-success-desc">感谢你对「{{name}}」的支持</view>
+        <view class="tip-order">单号：{{tipOrderNo}}</view>
+        <button class="tip-confirm" bindtap="finishTip">完成</button>
+      </block>
     </view>
   </view>
 </view>

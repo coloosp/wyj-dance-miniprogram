@@ -1,3 +1,5 @@
+const app = getApp()
+
 Page({
   data: {
     isLogin: false,
@@ -19,6 +21,7 @@ Page({
     // 只有用户真正选了头像和昵称后才算登录，排除"微信用户"这种占位数据
     if (saved && saved.userInfo && saved.userInfo.nickName && saved.userInfo.nickName !== '微信用户' && saved.userInfo.avatarUrl) {
       this.setData({ isLogin: true, userInfo: saved.userInfo, stats: saved.stats || this.data.stats })
+      app.syncUserProfile()
     } else {
       // 清除无效的缓存
       wx.removeStorageSync('wyj_user')
@@ -47,7 +50,7 @@ Page({
     this.setData({ 'userInfo.nickName': e.detail.value })
   },
 
-  onSave() {
+  async onSave() {
     // 如果用户没填昵称，就不让登录完成
     if (!this.data.userInfo.nickName || !this.data.userInfo.avatarUrl) {
       wx.showToast({ title: '请先选择头像和昵称', icon: 'none' })
@@ -59,6 +62,9 @@ Page({
     const stats = { collect: 0, history: 0, like: 0 }
     this.setData({ isLogin: true, showLogin: false, userInfo: info, stats: stats })
     wx.setStorageSync('wyj_user', { userInfo: info, stats: stats })
+    wx.showLoading({ title: '保存中', mask: true })
+    await app.syncUserProfile()
+    wx.hideLoading()
     wx.showToast({ title: '登录成功', icon: 'success' })
   },
 

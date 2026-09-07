@@ -1,5 +1,10 @@
-<!-- 通用列表页：收藏/观看记录/点赞记录 -->
+<!-- 通用列表页：收藏/观看记录/点赞记录，支持视频/内容切换 -->
 <view class="list-page">
+
+  <view class="list-tabs">
+    <view class="list-tab {{scope === 'video' ? 'active' : ''}}" data-scope="video" bindtap="switchScope">视频</view>
+    <view class="list-tab {{scope === 'content' ? 'active' : ''}}" data-scope="content" bindtap="switchScope">内容</view>
+  </view>
 
   <view class="list-body" wx:if="{{list.length}}">
     <t-cell
@@ -8,6 +13,12 @@
       description="{{item.desc}}"
       arrow="{{true}}"
       data-id="{{item.id}}"
+      data-kind="{{item.kind}}"
+      data-video-id="{{item.videoId}}"
+      data-src="{{item.src}}"
+      data-thumb="{{item.thumb}}"
+      data-troupe="{{item.troupe}}"
+      data-views="{{item.views}}"
       data-name="{{item.name}}"
       bind:click="goDetail"
     >

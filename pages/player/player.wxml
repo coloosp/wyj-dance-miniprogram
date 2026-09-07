@@ -26,8 +26,23 @@
     <view class="pl-info">
       <view class="pl-title">{{current.title}}</view>
       <view class="pl-meta">
-        <text>{{current.views}} 次播放</text>
+        <text>{{playCount || current.views}} 次播放</text>
         <text style="margin-left:12px;">{{current.troupeName}}</text>
+      </view>
+      <view class="pl-video-actions">
+        <view class="pl-video-action {{videoLiked ? 'active' : ''}}" bindtap="toggleVideoLike">
+          <t-icon name="{{videoLiked ? 'thumb-up-filled' : 'thumb-up'}}" size="16px" color="{{videoLiked ? '#C41E2A' : '#888'}}" />
+          <text>赞</text>
+          <text class="pl-video-like-num">{{likeCount}}</text>
+        </view>
+        <view class="pl-video-action {{videoFavorited ? 'active-fav' : ''}}" bindtap="toggleVideoFavorite">
+          <t-icon name="{{videoFavorited ? 'star-filled' : 'star'}}" size="16px" color="{{videoFavorited ? '#C4963A' : '#888'}}" />
+          <text>{{videoFavorited ? '已收藏' : '收藏'}}</text>
+        </view>
+        <button class="pl-video-share" open-type="share">
+          <t-icon name="share" size="15px" color="#fff" />
+          <text>分享</text>
+        </button>
       </view>
     </view>
 
@@ -40,22 +55,78 @@
     <!-- 评论区 -->
     <view class="pl-comments">
       <view class="pl-comments-title">评论 ({{commentTotal}})</view>
-      <view class="pl-comment-loading" wx:if="{{loadingComments}}">加载中...</view>
-      <view class="pl-comment-list" wx:elif="{{comments.length > 0}}">
-        <view class="pl-comment-item" wx:for="{{comments}}" wx:key="id">
-          <view class="pl-comment-meta">
-            <text class="pl-comment-name">{{item.nickname}}</text>
-            <text class="pl-comment-time">{{item.timeText}}</text>
-          </view>
-          <view class="pl-comment-content">{{item.content}}</view>
-        </view>
-      </view>
-      <view class="pl-comment-empty" wx:else>暂无评论，快来抢沙发</view>
 
-      <view class="pl-comment-editor">
+      <view class="pl-comment-editor pl-comment-editor-top">
+        <image wx:if="{{myAvatar}}" src="{{myAvatar}}" class="pl-editor-avatar" mode="aspectFill" />
+        <view wx:else class="pl-editor-avatar pl-editor-avatar-text">{{myAvatarText}}</view>
         <textarea class="pl-comment-input" value="{{commentText}}" maxlength="200" placeholder="说点什么..." bindinput="onCommentInput" />
         <button class="pl-comment-send" size="mini" loading="{{submitting}}" bindtap="submitComment">发送</button>
       </view>
+
+      <view class="pl-comment-loading" wx:if="{{loadingComments}}">加载中...</view>
+
+      <view class="pl-comment-list" wx:elif="{{comments.length > 0}}">
+        <view class="pl-comment-item" wx:for="{{comments}}" wx:key="id">
+          <image wx:if="{{item.avatar}}" src="{{item.avatar}}" class="pl-comment-avatar" mode="aspectFill" />
+          <view wx:else class="pl-comment-avatar pl-comment-avatar-text">{{item.avatarText}}</view>
+          <view class="pl-comment-main">
+            <view class="pl-comment-meta">
+              <text class="pl-comment-name">{{item.nickname}}</text>
+              <text class="pl-comment-time">{{item.timeText}}</text>
+            </view>
+            <view class="pl-comment-content">{{item.content}}</view>
+
+            <view class="pl-comment-actions">
+              <view class="pl-comment-action {{item.liked ? 'active' : ''}}" data-id="{{item.id}}" data-parent-index="{{index}}" bindtap="toggleCommentLike">
+                <t-icon name="{{item.liked ? 'thumb-up-filled' : 'thumb-up'}}" size="14px" color="{{item.liked ? '#C41E2A' : '#999'}}" />
+                <text>{{item.like_count || '赞'}}</text>
+              </view>
+              <view class="pl-comment-action" data-parent-id="{{item.id}}" data-nickname="{{item.nickname}}" bindtap="openReply">
+                <t-icon name="chat-bubble" size="14px" color="#999" />
+                <text>{{item.reply_count || '回复'}}</text>
+              </view>
+            </view>
+
+            <view class="pl-reply-list" wx:if="{{item.replies.length > 0}}">
+              <view class="pl-reply-item" wx:for="{{item.expanded ? item.replies : item.previewReplies}}" wx:for-item="reply" wx:for-index="replyIndex" wx:key="id">
+                <image wx:if="{{reply.avatar}}" src="{{reply.avatar}}" class="pl-reply-avatar" mode="aspectFill" />
+                <view wx:else class="pl-reply-avatar pl-reply-avatar-text">{{reply.avatarText}}</view>
+                <view class="pl-reply-main">
+                  <view class="pl-comment-meta">
+                    <text class="pl-comment-name">{{reply.nickname}}</text>
+                    <text class="pl-comment-time">{{reply.timeText}}</text>
+                  </view>
+                  <view class="pl-comment-content">
+                    <text wx:if="{{reply.reply_to_nickname}}" class="pl-reply-at">@{{reply.reply_to_nickname}} </text>{{reply.content}}
+                  </view>
+                  <view class="pl-comment-actions">
+                    <view class="pl-comment-action {{reply.liked ? 'active' : ''}}" data-id="{{reply.id}}" data-parent-index="{{index}}" data-reply-index="{{replyIndex}}" bindtap="toggleCommentLike">
+                      <t-icon name="{{reply.liked ? 'thumb-up-filled' : 'thumb-up'}}" size="14px" color="{{reply.liked ? '#C41E2A' : '#999'}}" />
+                      <text>{{reply.like_count || '赞'}}</text>
+                    </view>
+                    <view class="pl-comment-action" data-parent-id="{{item.id}}" data-nickname="{{reply.nickname}}" bindtap="openReply">
+                      <t-icon name="chat-bubble" size="14px" color="#999" />
+                      <text>回复</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view wx:if="{{item.reply_count > item.previewReplies.length}}" class="pl-reply-toggle" data-index="{{index}}" bindtap="toggleReplies">
+                {{item.replyToggleText}}
+              </view>
+            </view>
+
+            <view class="pl-reply-editor" wx:if="{{replyingTo && replyingTo.commentId == item.id}}">
+              <textarea class="pl-reply-input" value="{{replyText}}" focus="{{replyFocused}}" maxlength="200" placeholder="回复 @{{replyingTo.nickname}}" bindinput="onReplyInput" />
+              <view class="pl-reply-editor-btns">
+                <button class="pl-reply-cancel" size="mini" bindtap="cancelReply">取消</button>
+                <button class="pl-comment-send" size="mini" loading="{{submitting}}" bindtap="submitComment">发送</button>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="pl-comment-empty" wx:else>暂无评论，快来抢沙发</view>
     </view>
 
     <!-- 相关视频（始终显示） -->

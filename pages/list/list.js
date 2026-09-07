@@ -5,7 +5,9 @@
  *   ?type=history    → 观看记录
  *   ?type=likes      → 点赞记录
  *
- * 新增列表类型只需在 TYPE_CONFIG 中加一项配置即可，无需新建页面。
+ * 页面顶部可切换 scope：
+ *   video   → 视频相关记录
+ *   content → 原来的栏目/内容记录
  */
 
 const app = getApp()
@@ -20,7 +22,7 @@ const TYPE_CONFIG = {
     getList() { return app.getFavorites() },
     onDelete(id) {
       let list = app.getFavorites()
-      list = list.filter(f => f.id !== id)
+      list = list.filter(f => String(f.id) !== String(id))
       app.saveFavorites(list)
     }
   },
@@ -46,7 +48,8 @@ Page({
   data: {
     list: [],
     type: '',
-    config: {}
+    config: {},
+    scope: 'video'
   },
 
   onLoad(o) {
@@ -60,20 +63,33 @@ Page({
     this.load()
   },
 
+  switchScope(e) {
+    this.setData({ scope: e.currentTarget.dataset.scope })
+    this.load()
+  },
+
   load() {
     const config = this.data.config
-    if (config.getList) {
-      this.setData({ list: config.getList() })
-    }
+    if (!config.getList) return
+    const all = config.getList()
+    const scope = this.data.scope
+    const list = all.filter(item => (item.kind || 'content') === scope)
+    this.setData({ list })
   },
 
   goDetail(e) {
-    const { id, name } = e.currentTarget.dataset
-    wx.navigateTo({ url: `/pages/detail/detail?id=${id}&name=${name}` })
+    const ds = e.currentTarget.dataset
+    const kind = ds.kind
+    if (kind === 'video') {
+      const url = `/pages/player/player?id=${encodeURIComponent(ds.videoId || '')}&src=${encodeURIComponent(ds.src || '')}&title=${encodeURIComponent(ds.name || '')}&troupe=${encodeURIComponent(ds.troupe || '')}&views=${ds.views || 0}&thumb=${encodeURIComponent(ds.thumb || '')}`
+      wx.navigateTo({ url })
+      return
+    }
+    wx.navigateTo({ url: `/pages/detail/detail?id=${ds.id}&name=${ds.name}` })
   },
 
   onDelete(e) {
-    const id = parseInt(e.currentTarget.dataset.id)
+    const id = e.currentTarget.dataset.id
     if (this.data.config.onDelete) {
       this.data.config.onDelete(id)
       this.load()

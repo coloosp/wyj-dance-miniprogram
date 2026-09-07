@@ -7,6 +7,12 @@
 .gd-tag { color: rgba(255,255,255,0.8) !important; border-color: rgba(255,255,255,0.3) !important; }
 .gd-district { font-size: 12px; opacity: 0.7; }
 .gd-founder { font-size: 12px; opacity: 0.7; margin-top: 6px; }
+
+.gd-support { display: flex; align-items: center; justify-content: space-between; margin: 12px 14px 0; padding: 14px 14px 14px 16px; background: linear-gradient(135deg, #FFF3F3, #FFF8F5); border: 1px solid #F3DADA; border-radius: 12px; }
+.gd-support-title { font-size: 14px; font-weight: 700; color: #C41E2A; }
+.gd-support-sub { font-size: 11px; color: #B98A8A; margin-top: 4px; }
+.gd-support-btn { flex-shrink: 0; margin-left: 10px; background: #C41E2A; color: #fff; font-size: 12px; font-weight: 600; border-radius: 18px; padding: 8px 18px; }
+
 .gd-card { background: #fff; margin: 12px 14px; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
 .gd-title { font-size: 15px; font-weight: 700; color: #2C2C2C; display: flex; align-items: center; margin-bottom: 12px; }
 .gd-bar { width: 3px; height: 15px; background: #C41E2A; border-radius: 1.5px; margin-right: 8px; }
@@ -20,6 +26,9 @@
 .gd-prog-type { font-size: 11px; color: #C41E2A; background: #FFF0F0; padding: 1px 8px; border-radius: 10px; }
 .gd-prog-dur { font-size: 11px; color: #999; }
 .gd-prog-desc { font-size: 12px; color: #888; line-height: 1.5; }
+.gd-video-sort { display: flex; gap: 8px; margin-bottom: 12px; }
+.gd-video-sort-item { flex: 1; text-align: center; font-size: 12px; color: #888; background: #F7E6E6; border-radius: 8px; padding: 6px 0; }
+.gd-video-sort-item.active { background: #C41E2A; color: #fff; font-weight: 700; }
 .gd-video-list { display: flex; flex-wrap: wrap; gap: 10px; }
 .gd-video { width: calc(50% - 5px); position: relative; border-radius: 10px; overflow: hidden; background: #f0f0f0; }
 .gd-video-thumb { width: 100%; height: 100px; display: block; }
@@ -27,3 +36,26 @@
 .gd-video-info { padding: 8px 10px; }
 .gd-video-title { font-size: 12px; font-weight: 600; color: #2C2C2C; margin-bottom: 3px; line-height: 1.4; }
 .gd-video-views { font-size: 10px; color: #999; }
+
+.tip-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.tip-mask { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); }
+.tip-dialog { position: relative; width: 100%; max-width: 320px; background: #fff; border-radius: 14px; padding: 24px 20px 20px; box-sizing: border-box; }
+.tip-title { font-size: 17px; font-weight: 800; color: #2C2C2C; text-align: center; }
+.tip-sub { font-size: 11px; color: #999; text-align: center; margin: 6px 0 18px; }
+.tip-amount-list { display: flex; gap: 10px; }
+.tip-amount { flex: 1; border: 1px solid #EEE; border-radius: 10px; padding: 14px 0 12px; text-align: center; }
+.tip-amount.active { border-color: #C41E2A; background: #FFF4F4; }
+.tip-amount-label { font-size: 18px; font-weight: 800; color: #2C2C2C; }
+.tip-amount.active .tip-amount-label { color: #C41E2A; }
+.tip-amount-unit { font-size: 11px; color: #999; margin-top: 2px; }
+.tip-amount-desc { font-size: 11px; color: #B98A8A; margin-top: 6px; }
+.tip-selected { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 14px; font-size: 13px; color: #888; }
+.tip-selected-value { color: #C41E2A; font-size: 17px; font-weight: 800; }
+.tip-confirm { width: 100%; margin: 0; background: #C41E2A; color: #fff; border-radius: 22px; padding: 12px 0; font-size: 14px; font-weight: 600; line-height: 1.4; }
+.tip-confirm::after { border: none; }
+.tip-note { text-align: center; color: #BBB; font-size: 11px; margin-top: 10px; }
+.tip-success-icon { text-align: center; margin-top: 4px; }
+.tip-success-title { text-align: center; font-size: 19px; font-weight: 800; color: #2C2C2C; margin-top: 8px; }
+.tip-success-amount { text-align: center; font-size: 28px; font-weight: 900; color: #C41E2A; margin-top: 8px; }
+.tip-success-desc { text-align: center; font-size: 13px; color: #666; margin-top: 8px; }
+.tip-order { text-align: center; font-size: 11px; color: #AAA; margin: 14px 0 18px; }
