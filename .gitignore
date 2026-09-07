@@ -6,3 +6,4 @@ assets/images/
 *.log
 .DS_Store
 Thumbs.db
+videos/
