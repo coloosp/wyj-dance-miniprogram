@@ -10,6 +10,7 @@
       { "type": "folder", "value": ".claude" },
       { "type": "folder", "value": "cloudflare" },
       { "type": "folder", "value": "assets/images" },
+      { "type": "folder", "value": "videos" },
       { "type": "folder", "value": "二维码" },
       { "type": "file", "value": "*.zip" },
       { "type": "file", "value": "*.py" },
