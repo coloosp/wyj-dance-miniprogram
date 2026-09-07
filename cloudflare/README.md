@@ -1,37 +1,33 @@
-# 舞影纪 · Cloudflare 迁移部署指南
+# Cloudflare 云端说明
 
-## 部署步骤
+本目录维护 Cloudflare Worker、D1 schema 和 R2 相关资源。
 
-### 1. 设置 API Token
+## 资源
 
-```cmd
-set CLOUDFLARE_API_TOKEN=你的token
-```
+- R2 桶：`wyj-videos`，公开域名 `https://pub-261668b6483a438f8f09a549c5c0e4d1.r2.dev`
+- Worker：`wyj-api`，部署于 `https://wyj-api.touhou31415.workers.dev`
+- D1：`wyj-likes`，用于栏目内容点赞计数，schema 见 `schema.sql`
 
-### 2. 创建 KV 命名空间
+## 部署 Worker
 
-```cmd
-cd cloudflare
-npx wrangler kv:namespace create "LIKES"
-```
+确保本机已通过 wrangler 登录，然后在 `cloudflare` 目录执行：
 
-将输出的 `id` 填入 `wrangler.toml` 的 `[[kv_namespaces]]` → `id` 字段。
-
-### 3. 设置微信 AppSecret
-
-```cmd
-npx wrangler secret put WX_SECRET
-```
-
-输入小程序 AppSecret（在微信小程序后台 → 开发管理 → 开发设置 中获取）。
-
-### 4. 部署
-
-```cmd
+```bash
 npx wrangler deploy
 ```
 
-### 5. 配置小程序
+`WX_SECRET` 为云函数/Worker 需要的微信 AppSecret，通过以下命令设置：
 
-- 将 Worker URL 填入 `app.js` 顶部的 `API_BASE`
-- 在微信小程序后台 → 开发管理 → 服务器域名 → request 合法域名，添加 Worker URL
+```bash
+npx wrangler secret put WX_SECRET
+```
+
+## R2 上传
+
+视频/封面等上传到 `wyj-videos`，例如：
+
+```bash
+npx wrangler r2 object put wyj-videos/1083627848-1-208.mp4 --file "..\videos\1083627848-1-208.mp4"
+```
+
+小程序侧通过 `data/videos.js` 的 `getUrl()` 统一拼接公开域名。
